@@ -1,0 +1,36 @@
+@model IBFSNetwork.Models.AlertViewModels.Document
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Document</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Contentype)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contentype)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DocName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DocName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.DocumentId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

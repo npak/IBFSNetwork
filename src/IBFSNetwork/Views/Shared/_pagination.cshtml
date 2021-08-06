@@ -1,0 +1,71 @@
+﻿@model IBFSNetwork.Models.AlertWithPage
+
+@{
+    Layout = "";
+}
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        @if (Model.PageInfo.EndPage > 1)
+        {
+            <ul class="pagination pagination-xs">
+                @if (Model.PageInfo.CurrentPage > 1 && Model.PageInfo.TotalPages > Model.PageInfo.PageSize)
+                {
+                    <li class="page-item">
+                        <a href="~/Alerts/Index"><span aria-hidden="true" title="First">&laquo;</span> </a>
+                    </li>
+                    <li>
+                        <a href="~/Alerts/Index?page=@(Model.PageInfo.CurrentPage - 1)" title="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+                    </li>
+                }
+
+                @for (var page = Model.PageInfo.StartPage; page <= Model.PageInfo.EndPage; page++)
+                {
+                    <li class="@(page == Model.PageInfo.CurrentPage ? "active" : "page-item")">
+                        <a class="pageclick" href="#" title="@page">@page</a>
+                    </li>}
+
+                @if (Model.PageInfo.CurrentPage < Model.PageInfo.TotalPages && Model.PageInfo.TotalPages > Model.PageInfo.PageSize)
+                {
+                    <li>
+                        <a href="~/Alerts/Index?location=0&state=0&city=&page=@(Model.PageInfo.CurrentPage + 1)" title="CNext"><span aria-hidden="true">&rsaquo;</span></a>
+                    </li>
+                    <li>
+                        <a class="pageclick" href="" title="Last" name="=@(Model.PageInfo.TotalPages)"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+@*@if (Model.EndPage > 1)
+{
+    <ul class="pagination pagination-xs">
+        @if (Model.CurrentPage > 1 && Model.TotalPages > Model.PageSize)
+        {
+            <li class="page-item">
+                <a href="~/Home/Index"><span aria-hidden="true" title="First">&laquo;</span> </a>
+            </li>
+                <li>
+                    <a href="~/Home/Index?page=@(Model.CurrentPage - 1)" title="Previous"><span aria-hidden="true">&lsaquo;</span></a>
+                </li>
+        }
+
+        @for (var page = Model.StartPage; page <= Model.EndPage; page++)
+        {
+            <li class="@(page == Model.CurrentPage ? "active" : "page-item")">
+                <a href="~/Home/Index?page=@page">@page</a>
+            </li>}
+
+        @if (Model.CurrentPage < Model.TotalPages && Model.TotalPages > Model.PageSize)
+        {
+            <li>
+                <a href="~/Home/Index?page=@(Model.CurrentPage + 1)" title="CNext"><span aria-hidden="true">&rsaquo;</span></a>
+            </li>
+                <li>
+                    <a href="~/Home/Index?page=@(Model.TotalPages)" title="Last"><span aria-hidden="true">&raquo;</span></a>
+                </li>
+        }
+    </ul>
+}*@

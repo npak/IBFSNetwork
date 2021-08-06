@@ -1,0 +1,62 @@
+@model IBFSNetwork.Models.ForumViewModels.SubThreadView
+
+@{
+    ViewData["Title"] = "SubForum";
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-body">   
+        <table id="myTable" class="table table-striped">
+            <thead>
+                <tr class="myforum">
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Replies
+                    </th>
+                    <th>
+                        Views
+                    </th>
+                    <th>
+                        Last Message
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Question)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Replies" asp-action="Index" asp-route-id="@item.QuestionId">@Html.DisplayFor(modelItem => item.Title)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReplyCount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ViewCount)
+                        </td>
+                        <td class="col-md-2">
+                            @if (@item.QueId > 0)
+                            {
+                                <div>
+                                    <small>@item.LastDate <a asp-controller="Replies" asp-action="Index" asp-route-id="@item.QueId">Last message </a> by @item.ByUser</small>
+                                </div>
+                            }
+                        </td>
+                        @if (User.IsInRole("admin") || Model.UserId == @item.UserId)
+                        {
+                            <td class="col-md-2 text-center">
+                                <a asp-action="Edit" class="btn btn-primary btn-xs" asp-route-id="@item.QueId">Edit</a>|<a asp-action="Delete" class="btn btn-danger btn-xs" asp-route-id="@item.QueId">Delete</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table> 
+     </div>
+    </div>

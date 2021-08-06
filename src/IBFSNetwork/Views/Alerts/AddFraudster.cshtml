@@ -1,0 +1,623 @@
+@model IBFSNetwork.Models.AlertViewModels.Alert
+
+@{
+    //Layout = "";
+    ViewData["Title"] = "Add co-conspirator";
+}
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script>
+
+  $( function() {
+      $(".mydatepicker").datepicker({
+          format: 'MM.DD.YYYY',
+          changeMonth: true,
+          changeYear: true,
+          default: true
+      });
+
+  });
+
+</script>
+
+<script>
+    $(document).ready(function SetLossAmount() {
+        //set init value
+        var y = $('#lossAmount').val();
+        $('#tem1').val(addCommas(y));
+    });
+
+    $(function () {
+        $('#tem1').on('input', function () {
+            var x = $(this).val();
+            x = x.replace(",", "").replace(",", "").replace(",", "");
+            $('#lossAmount').val(x);
+
+            $('#tem1').val(addCommas(x));
+        });
+    });
+
+
+    function addCommas(x) {
+        x = x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x;
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#CountryHidden").hide();
+        $("#addelement3").hide();
+        $("#addelement4").hide();
+
+        $("#myLocation").change(function () {
+            var str = "";
+            $("#myLocation").each(function () {
+                str += $(this).find(":selected").text();
+
+                if (str == "Other") {
+                    $('#CountryHidden').show();
+                    $('#LocationByCircuit').hide();
+                    $('#LocationState').hide();
+                }
+                else {
+                    $("#CountryHidden").prop('selectedIndex', 0);
+                    $('#CountryHidden').hide();
+
+                   $('#LocationByCircuit').show();
+                    $('#LocationState').show();
+                }
+            });
+        });
+        $("#upload").click(function () {
+            UploadFiles();
+        });
+
+    })
+</script>
+
+<script>
+    $(document).ready(function My1() {
+        var i = 1;
+        $('#deleteLink').hide();
+
+            $('#addLink').click(function () {
+                i++;
+                if (i == 2)
+                    $("#addelement3").show();
+                else if (i == 3)
+                    $("#addelement4").show();
+                else
+                    alert("Error while adding additional IDs.");
+
+                $('#deleteLink').show();
+            })
+
+            $('#deleteLink').click(function () {
+
+                if (i == 2)
+                {
+                    $("#idtypeid03").val('0');
+                    $("#passport03").val('');
+                    $("#addelement3").hide();
+                }
+                else if (i == 3)
+                {
+                    $("#idtypeid04").val('0');
+                    $("#passport04").val('');
+
+                    $("#addelement4").hide();
+                }
+                else
+                    alert("Error while deleting the last added IDs.");
+                i--;
+
+                if (i == 1)
+                    $('#deleteLink').hide();
+
+            })
+
+        })
+
+</script>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <img class="img-responsive" src="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="myModalFR" class="modal fade" role="dialog">
+    <div class="modal-dialog small">
+        <div class="modal-content">
+
+            <div class="modal-body center-block">
+                <div>To add co-conspirators use the link below</div>
+                <a asp-controller="Alerts" asp-action="AddFraudster" asp-route-alertId="@Model.AlertId">Add co-conspirator</a>
+            </div>
+            <div class="modal-body center-block">
+                <form asp-action="LinkFraudsters" asp-controller="Alerts" method="post" autocomplete="on">
+                    <div>Search existing co-conspirator</div>
+                    <div class="modal-body center-block">
+                        <input type="text" name="term" data-autocomplete-source='@Url.Action("AutocompleteSearch", "Alerts")' placeholder="LastName,FirstName" />
+                        <input type="hidden" name="alertId" value="@Model.AlertId" class="form-control" />
+                        <input type="submit" value="Create Link" />
+
+                        <script type="text/javascript">
+                            $(function () {
+                                $("[data-autocomplete-source]").each(function () {
+                                    var target = $(this);
+                                    target.autocomplete({ source: target.attr("data-autocomplete-source") });
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+               
+                <a asp-controller="Home" asp-action="Index">Close</a>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="row">
+    <div class="col-md-7"><h2>Add co-conspirator</h2></div>
+    <div class="col-md-5">
+        <div class="modal-body center-block">
+            <form asp-action="LinkFraudsters" asp-controller="Alerts" method="post" autocomplete="on">
+                <h4>Search existing co-conspirator</h4>
+                <div class="modal-body center-block">
+                    <input type="text" name="term" data-autocomplete-source='@Url.Action("AutocompleteSearch", "Alerts")' placeholder="LastName,FirstName" />
+                    <input type="hidden" name="alertId" value="@Model.AlertId" class="form-control" />
+                    <input type="submit" value="Create Link" />
+
+                    <script type="text/javascript">
+                            $(function () {
+                                $("[data-autocomplete-source]").each(function () {
+                                    var target = $(this);
+                                    target.autocomplete({ source: target.attr("data-autocomplete-source") });
+                                });
+                            });
+                    </script>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<form asp-controller="alerts" asp-action="AddFraudster">
+    <div class="form-horizontal">
+        
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="hidden" asp-for="@Model.AlertId" class="form-control" />
+        <div class="panel panel-default">
+            <div class="panel-heading"> Subject Info</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <label asp-for="Fraudsters[0].LastName"></label>
+                        <input name="Fraudsters[0].LastName" asp-for="Fraudsters[0].LastName" class="form-control" />
+                        <span asp-validation-for="Fraudsters[0].LastName" class="text-danger" />
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].FirstName"></label>
+                        <input name="Fraudsters[0].FirstName" asp-for="Fraudsters[0].FirstName" class="form-control" />
+                        <span asp-validation-for="Fraudsters[0].FirstName" class="text-danger" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].MiddleName"></label>
+                        <input name="Fraudsters[0].MiddleName" asp-for="Fraudsters[0].MiddleName" class="form-control" />
+                        <span asp-validation-for="Fraudsters[0].MiddleName" class="text-danger" />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <label asp-for="Fraudsters[0].PhoneNumber"></label>
+                        <input type="text" name="Fraudsters[0].LastName" asp-for="Fraudsters[0].PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Fraudsters[0].PhoneNumber" class="text-danger" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].Gender" control-label"></label>
+                        <select name="Fraudsters[0].Gender" asp-for="Fraudsters[0].Gender" class="form-control">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <span asp-validation-for="Fraudsters[0].Gender" class="text-danger" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Fraudsters[0].BOD" class="control-label"></label>
+
+                        <input type="text" asp-for="Fraudsters[0].BOD" class="mydatepicker" />
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <label asp-for="Fraudsters[0].Address"></label>
+                        <input name="Fraudsters[0].Address" asp-for="Fraudsters[0].Address" class="form-control" />
+                        <span asp-validation-for="Fraudsters[0].Address" class="text-danger" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].Email"></label>
+                        <input name="Fraudsters[0].Email" asp-for="Fraudsters[0].Email" class="form-control" />
+                        <span asp-validation-for="Fraudsters[0].Email" class="text-danger" />
+                    </div>
+                    <div class="col-md-5">
+                        <label asp-for="Fraudsters[0].Alias"></label>
+                        <input name="Fraudsters[0].Alias" asp-for="Fraudsters[0].Alias" class="form-control" />
+                        <span asp-validation-for="Fraudsters[0].Alias" class="text-danger" />
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">Alert info </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="AlertDate" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <div>
+                                    <div class="input-group date" data-provide="datepicker">
+                                        <input type="text" id="datepicker" asp-for="AlertDate" class="mydatepicker" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="BankSizeId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="BankSizeId" asp-items="ViewBag.BankSizes" class="form-control"></select>
+                                <span asp-validation-for="BankSizeId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BankTypeId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="BankTypeId" class="form-control" asp-items="ViewBag.BankTypes"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FraudTypeId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="FraudTypeId" class="form-control" asp-items="ViewBag.FraudTypes"></select>
+                            </div>
+                        </div>
+                        <div id="myLocation" class="form-group">
+                            <label asp-for="LocationId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.Locations"></select>
+                            </div>
+                        </div>
+
+                        <div id="CountryHidden" class="form-group">
+                            <label asp-for="CountryId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="CountryId" class="form-control" asp-items="ViewBag.Countries"><option value="0">Select one</option></select>
+                            </div>
+                        </div>
+
+                        <div id="LocationByCircuit" class="form-group">
+                            <label asp-for="LocationByCircuitId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="LocationByCircuitId" class="form-control" asp-items="ViewBag.LocationsByCircuit"><option value="0">Select one</option></select>
+                            </div>
+                        </div>
+
+                        <div id="LocationState" class="form-group">
+                            <label asp-for="LocationStateId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="LocationStateId" class="form-control" asp-items="ViewBag.LocationsState"><option value="0">Select one</option></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="City" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="City" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LostAmount" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input type="hidden" id="lossAmount" asp-for="LostAmount" class="form-control" />
+                                <input id="tem1" class="form-control" />
+                                <span asp-validation-for="LostAmount" class="text-danger" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="Notes" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <textarea rows="3" asp-for="Notes" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">Upload photos and files </div>
+                    <div class="panel-body">
+
+                        <div class="pull-left">
+                            <label class="btn btn-default" for="files">
+                                <input type="file" id="files"
+                                       name="files" multiple style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                                Choose file
+                            </label>
+                        </div>
+                        <div class="pull-right">
+                            <input type="button"
+                                   id="upload"
+                                   value="Upload File" class="form-control" />
+                        </div>
+                        <div class="clearfix"></div>
+
+                        @*<input type="file" id="files"
+                            name="files" multiple />*@
+
+                        <span class='label label-default' id="upload-file-info"></span>
+
+                        <hr />
+                        <div class="row">
+                            <div>
+                                <div id="filelist">
+                                    <ul id="myUploadID"></ul>
+                                    <ul id="myUploadDoc"></ul>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="panel panel-default ">
+                <div class="panel-heading">IDs</div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID #1</h4>
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[0].IDTypeId" class="control-label"></label>
+                                <select asp-for="Fraudsters[0].FraudsterIDs[0].IDTypeId" name="Fraudsters[0].FraudsterIDs[0].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes">
+                                    <option value="0">Select one</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[0].PassportNumber" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[0].PassportNumber" asp-for="Fraudsters[0].FraudsterIDs[0].PassportNumber" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[0].DateOfIssue" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Fraudsters[0].FraudsterIDs[0].DateOfIssue" asp-for="Fraudsters[0].FraudsterIDs[0].DateOfIssue" class="mydatepicker" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[0].ExpirationDate" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Fraudsters[0].FraudsterIDs[0].ExpirationDate" asp-for="Fraudsters[0].FraudsterIDs[0].ExpirationDate" class="mydatepicker" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[0].IssuingCountry" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[0].IssuingCountry" asp-for="Fraudsters[0].FraudsterIDs[0].IssuingCountry" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[0].IssuingAuthority" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[0].IssuingAuthority" asp-for="Fraudsters[0].FraudsterIDs[0].IssuingAuthority" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="addelement1" class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID #2</h4>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[1].IDTypeId" class="control-label"></label>
+                                <select asp-for="Fraudsters[0].FraudsterIDs[1].IDTypeId" name="Fraudsters[0].FraudsterIDs[1].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes"><option value="0">Select one</option></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[1].PassportNumber" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[1].PassportNumber" asp-for="Fraudsters[0].FraudsterIDs[1].PassportNumber" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[1].DateOfIssue" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Fraudsters[0].FraudsterIDs[1].DateOfIssue" asp-for="Fraudsters[0].FraudsterIDs[1].DateOfIssue" class="mydatepicker" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[1].ExpirationDate" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Fraudsters[0].FraudsterIDs[1].ExpirationDate" asp-for="Fraudsters[0].FraudsterIDs[1].ExpirationDate" class="mydatepicker" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[1].IssuingCountry" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[1].IssuingCountry" asp-for="Fraudsters[0].FraudsterIDs[1].IssuingCountry" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[1].IssuingAuthority" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[1].IssuingAuthority" asp-for="Fraudsters[0].FraudsterIDs[1].IssuingAuthority" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="addelement3" class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID #3</h4>
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[2].IDTypeId" class="control-label"></label>
+                                <select asp-for="Fraudsters[0].FraudsterIDs[2].IDTypeId" id="idtypeid03" name="Fraudsters[0].FraudsterIDs[2].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes"><option value="0">Select one</option></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[2].PassportNumber" class="control-label"></label>
+                                <input id="passport03" name="Fraudsters[0].FraudsterIDs[2].PassportNumber" asp-for="Fraudsters[0].FraudsterIDs[2].PassportNumber" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[2].DateOfIssue" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Fraudsters[0].FraudsterIDs[2].DateOfIssue" asp-for="Fraudsters[0].FraudsterIDs[2].DateOfIssue" class="mydatepicker" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[2].ExpirationDate" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Fraudsters[0].FraudsterIDs[2].ExpirationDate" asp-for="Fraudsters[0].FraudsterIDs[2].ExpirationDate" class="mydatepicker" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[2].IssuingCountry" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[2].IssuingCountry" asp-for="Fraudsters[0].FraudsterIDs[2].IssuingCountry" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[2].IssuingAuthority" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[2].IssuingAuthority" asp-for="Fraudsters[0].FraudsterIDs[2].IssuingAuthority" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="addelement4" class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID #4</h4>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[3].IDTypeId" class="control-label"></label>
+                                <select asp-for="Fraudsters[0].FraudsterIDs[3].IDTypeId" id="idtypeid04" name="Fraudsters[0].FraudsterIDs[3].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes"><option value="0">Select one</option></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[3].PassportNumber" class="control-label"></label>
+                                <input id="passport04" name="Fraudsters[0].FraudsterIDs[3].PassportNumber" asp-for="Fraudsters[0].FraudsterIDs[3].PassportNumber" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[3].DateOfIssue" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Fraudsters[0].FraudsterIDs[3].DateOfIssue" asp-for="Fraudsters[0].FraudsterIDs[3].DateOfIssue" class="mydatepicker" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[3].ExpirationDate" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Fraudsters[0].FraudsterIDs[3].ExpirationDate" asp-for="Fraudsters[0].FraudsterIDs[3].ExpirationDate" class="mydatepicker" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[3].IssuingCountry" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[3].IssuingCountry" asp-for="Fraudsters[0].FraudsterIDs[3].IssuingCountry" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Fraudsters[0].FraudsterIDs[3].IssuingAuthority" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[3].IssuingAuthority" asp-for="Fraudsters[0].FraudsterIDs[3].IssuingAuthority" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <small>
+                        <a id="addLink" href="javascript:void(0)"> Add ID</a>
+                        <span id="deleteLink">/<a href="javascript:void(0)"> Delete the last</a></span>
+                    </small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-1">
+                <input type="submit" value="Create co-conspirator" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $(document).on('click', '.thumbnailclick', function () {
+            var image = $(this).attr('src');
+            $('#myModal').on('show.bs.modal', function () {
+                $(".img-responsive").attr("src", image);
+            });
+        });
+
+    $(document).on('click', '.thumbnail', function () {
+        var image = $(this).find('img').attr('src');
+
+        $('#myModal').on('show.bs.modal', function () {
+            $(".img-responsive").attr("src", image);
+        });
+    });
+</script>
+
+@if (Convert.ToInt32(ViewBag.FraudsterId) > 0)
+{
+    <script>
+
+        $(window).load(function () {
+            $('#myModalFR').modal('show');
+        });
+    </script>
+}

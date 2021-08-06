@@ -1,0 +1,46 @@
+@model IBFSNetwork.Controllers.IndexViewModel11
+
+<div class="col-md-6 col-md-offset-3">
+    <h1>ASP.NET MVC - Pagination Example</h1>
+
+    <!-- items being paged -->
+    <ul>
+        @foreach (var item in Model.Items)
+        {
+            <li>@item</li>}
+    </ul>
+
+    <!-- pager -->
+    @Html.Partial("_pagination",Model.Pager)
+    @*@if (Model.Pager.EndPage > 1)
+    {
+        <ul class="pagination pagination-xs">
+            @if (Model.Pager.CurrentPage > 1 &&  Model.Pager.TotalPages > Model.Pager.PageSize)
+            {
+                <li class="page-item">
+                    <a href="~/TestPagination/Index">First</a>
+                </li>
+                            <li>
+                                <a href="~/TestPagination/Index?page=@(Model.Pager.CurrentPage - 1)"><span aria-hidden="true">&laquo;</span></a>
+                            </li>
+            }
+
+            @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+            {
+                <li class="@(page == Model.Pager.CurrentPage ? "active" : "page-item")">
+                    <a href="~/TestPagination/Index?page=@page">@page</a>
+                </li>}
+
+            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages && Model.Pager.TotalPages > Model.Pager.PageSize)
+            {
+                <li>
+                    <a href="~/TestPagination/Index?page=@(Model.Pager.CurrentPage + 1)"><span aria-hidden="true">&raquo;</span></a>
+                </li>
+                            <li>
+                                <a href="~/TestPagination/Index?page=@(Model.Pager.TotalPages)">Last</a>
+                            </li>
+            }
+        </ul>
+    }*@
+</div>
+		 

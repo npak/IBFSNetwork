@@ -1,0 +1,139 @@
+@model IBFSNetwork.Models.AlertWithPage
+@*@using IBFSNetwork.Helpers*@
+@{
+      ViewData["Title"] = "Index";
+}
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+    $("#Clear").click(function () {
+       $("#city").val("");
+       $("#location").val("0");
+       $("#state").val("0");
+    });
+});
+
+$(document).ready(function () {
+    $('body').on('click','.pageclick',function () {
+        var data = new FormData();
+        var page = $(this).attr('title');
+
+        var sortfield = $(this).data("sortfield");
+        if (typeof (sortfield) != "undefined" || sortfield != null)
+        {
+               if (sortfield=='DateField')
+            {
+                if ($("#dateSortDirection").val() == "asc") {
+                    $("#dateSortDirection").val("desc");
+                }
+                else {
+                    $("#dateSortDirection").val("asc");
+                }
+            }
+            else
+            {
+
+                if ($("#locationSortDirection").val() == "asc") {
+                    $("#locationSortDirection").val("desc");
+                }
+                else {
+                    $("#locationSortDirection").val("asc");
+                }
+            }
+           
+        }
+        data.append("location", $("#location").val());
+
+        data.append("state", $("#state").val());
+        data.append("city", $("#city").val());
+
+        data.append("dateSortDirection", $("#dateSortDirection").val());
+        data.append("locationSortDirection", $("#locationSortDirection").val());
+
+        
+        data.append("pagesize", "20");
+        data.append("page", page);
+
+        $.ajax({
+            type: "POST",
+            url: "/alerts/loadPage",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (message) {
+                $('#ppaging').html(message);
+            },
+            error: function () {
+                alert("There was error uploading files!");
+            }
+        });
+    });
+});
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable(
+            {
+                "lengthChange":false,
+                "paging":true,
+                "searching": false
+            }
+            );
+    });
+
+</script>
+
+<div class="row">
+    <div class="header-left" > <h2> Alerts</h2></div>
+    <div class="addnew-right" >
+        <a asp-action="Create" class="btn btn-addnew btn-sm">Create New</a>
+    </div>
+</div>
+
+<form asp-action="Index" asp-controller="Alerts" method="get">
+
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+
+            <div class="row">
+                <div  class="col-md-1">
+                    <strong> Filter by:</strong>
+                </div>
+                <div id="myLocation" class="col-md-2">
+                    <select id="location" name="location" class="form-control input-sm" asp-items="ViewBag.Locations"><option value="0">Select location</option></select>
+
+                </div>
+                @*<div id="CountryHidden" class="col-md-2">
+                        <select name="countries" class="form-control" asp-items="ViewBag.Countries"><option value="0">Select country</option></select>
+                    </div>*@
+                <div id="LocationState" class="col-md-2">
+                    <select id="state" name="state" class="form-control input-sm" asp-items="ViewBag.LocationsState"><option value="0">Select state</option></select>
+                </div>
+                <div class="col-md-2">
+
+                    <input name="city" id="city" value="@ViewBag.City" class="form-control input-sm" placeholder="Type City" />
+                </div>
+                <div class="col-md-1">
+                    <input type="submit" value="Search" class="form-control input-sm">
+
+                </div>
+                <div class="col-md-1">
+                    <input type="button" id="Clear" value="Clear" class="form-control input-sm"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="ppaging">
+    @Html.Partial("_page",Model)
+
+</div>
+    @*<div class="btn-group">
+            <nav aria-label="Page navigation">
+                @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
+            </nav>
+        </div>*@

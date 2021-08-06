@@ -1,0 +1,58 @@
+@model IEnumerable<IBFSNetwork.Models.ForumViewModels.Question>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>List of Questions</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Forum
+            </th>
+            <th>
+                subForum
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReplyCount)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.ViewCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Forum.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubThread.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReplyCount)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.ViewCount)
+            </td>
+            <td>
+                <a asp-action="Edit" class="btn btn-primary btn-xs" asp-route-id="@item.QuestionId">Edit</a> |
+                <a asp-action="Delete" class="btn btn-danger btn-xs" asp-route-id="@item.QuestionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

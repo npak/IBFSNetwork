@@ -1,0 +1,72 @@
+@model IBFSNetwork.Models.ForumViewModels.ViewReply
+
+@{
+    ViewData["Title"] = "Duscussion";
+}
+
+<ui class="breadcrumb">
+    <li> <small><a asp-controller="forumsview" asp-action="Index">Forums</a> </small></li>
+    
+        <ui class="breadcrumb">
+            <li class="active"> <small><a asp-controller="forumsview" asp-action="Index">@Model.BreadCrumb[0]</a> </small></li>
+            <li class="active"> <small><a asp-controller="forumsview" asp-action="Forum" asp-route-id="@Model.ForumId">@Model.BreadCrumb[1]</a> </small></li>
+            @if (@Model.BreadCrumb.Count==3)
+            {
+                <li class="active"> <small><a asp-controller="forumsview" asp-action="SubForum"  asp-route-id="@Model.SubForumId">@Model.BreadCrumb[2]</a> </small></li>
+            }
+        </ui>
+</ui>
+
+<h3>@Model.Title</h3>
+@*<div>@Model.CommentsCount Comments </div>*@
+<div class="row">
+
+    <div class="col-md-2">
+       @Model.CommentsCount Comments  </div>
+    <div class="col-md-2 col-md-offset-8">
+        <a asp-action="Create" asp-route-id="@Model.QuestionId">Reply</a>
+    </div>
+</div>
+<hr />
+
+    @foreach (var item in Model.ReplyList)
+    {
+        <div class="row">
+            <div class="col-md-1">
+
+            </div>
+
+            <div class="col-md-8">
+                @*<a asp-action="Details" asp-route-id="@item.QuestionId">@item.ReplayMsg</a>*@
+                @Html.Raw(@item.ReplyMsg)
+            </div>
+
+
+            <div class="col-md-2">
+                <div>
+                    <small>
+                        @Html.DisplayFor(modelItem => item.AppUser.UserName) posted @item.ReplyDate.ToString("MM/dd/yyyy")
+                    </small>
+                </div>
+                @if (@ViewBag.UserId == item.AppUser.Id)
+                    {
+                    <div>
+                        <a asp-action="Edit" asp-route-id="@item.ReplyId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ReplyId">Delete</a>
+                    </div>
+                    }
+            </div>
+
+        </div>
+        <hr />
+
+    }
+    <div class="row">
+
+        @*<div class="col-md-3 col-md-offset-7 ">
+                <a asp-controller="Questions" asp-action="ViewForumList">Back to Discussion List</a>
+            </div>*@
+        <div class="col-md-2 col-md-offset-10">
+            <a asp-action="Create" asp-route-id="@Model.QuestionId">Reply</a>
+        </div>
+    </div>

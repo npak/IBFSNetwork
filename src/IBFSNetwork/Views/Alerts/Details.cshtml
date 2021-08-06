@@ -1,0 +1,389 @@
+@model IBFSNetwork.Models.AlertViewModels.Alert
+
+@{
+    ViewData["Title"] = "Details";
+}
+<script>
+    $(document).ready(function SetLossAmount() {
+        //set init value
+        var y = $('#lossAmount').val();
+       // $('#tem1').val(addCommas(y));
+        $('#tem1').html(addCommas(y));
+
+    });
+
+    $(function () {
+        $('#tem1').on('input', function () {
+            var x = $(this).val();
+            x = x.replace(",", "").replace(",", "").replace(",", "");
+            $('#lossAmount').val(x);
+            $('#tem1').val(addCommas(x));
+        });
+    });
+
+
+    function addCommas(x) {
+        x = x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x;
+    }
+</script>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="img-responsive" src="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="form-horizontal">
+        <h4>Alert details</h4>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="hidden" asp-for="AlertId" class="form-control" />
+        <input type="hidden" asp-for="Fraudsters[0].FraudsterId" class="form-control" />
+
+        <div class="panel panel-default ">
+            <div class="panel-heading"> Subject Info</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <label asp-for="Fraudsters[0].LastName"></label>
+                        : @Model.Fraudsters[0].LastName
+
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].FirstName"></label>
+                       : @Model.Fraudsters[0].FirstName
+
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].MiddleName"></label>
+                        : @Model.Fraudsters[0].MiddleName
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <label asp-for="Fraudsters[0].PhoneNumber"></label>
+                       : @Model.Fraudsters[0].PhoneNumber
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].Gender" ></label>
+                       : @Model.Fraudsters[0].Gender
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Fraudsters[0].BOD" ></label>
+
+                        : @Model.Fraudsters[0].BOD.ToString("MM/dd/yyyy")
+
+                        </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <label asp-for="Fraudsters[0].Address"></label>
+                        : @Model.Fraudsters[0].Address
+
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].Email"></label>
+                       : @Model.Fraudsters[0].Email
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Fraudsters[0].Alias"></label>
+                      : @Model.Fraudsters[0].Alias
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">Alert </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="AlertDate" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                @Model.AlertDate.ToString("MM/dd/yyyy")
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="BankSizeId" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                <select asp-for="BankSizeId" asp-items="ViewBag.BankSizes" class="form-control343" hidden></select>
+                                 @Model.BankSize.Caption
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BankTypeId" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                <select asp-for="BankTypeId" class="" asp-items="ViewBag.BankTypes" hidden></select>
+                                  @Model.BankType.Caption
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FraudTypeId" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                <select asp-for="FraudTypeId" class="" asp-items="ViewBag.FraudTypes"  hidden></select>
+                                 @Model.FraudType.Caption
+                            </div>
+                        </div>
+                        <div id="myLocation" class="form-group">
+                            <label asp-for="LocationId" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                <select asp-for="LocationId" class="" asp-items="ViewBag.Locations"  hidden></select>
+                                @Model.Location.Caption
+                            </div>
+                        </div>
+
+                        <div id="CountryHidden" class="form-group">
+                            <label asp-for="CountryId" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                <select asp-for="CountryId" class="" asp-items="ViewBag.Countries"  hidden><option value="0">Select one</option></select>
+                                @if (@Model.Country!=null)
+                                { 
+                                    @Model.Country.Caption
+                                }
+                            </div>
+                        </div>
+
+                        <div id="LocationByCircuit" class="form-group">
+                            <label asp-for="LocationByCircuitId" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                <select asp-for="LocationByCircuitId" class="" asp-items="ViewBag.LocationsByCircuit"  hidden><option value="0">Select one</option></select>
+                                @if (@Model.LocationByCircuit!= null)
+                                {
+                                    @Model.LocationByCircuit.Caption
+                                }
+                            </div>
+                        </div>
+
+                        <div id="LocationState" class="form-group">
+                            <label asp-for="LocationStateId" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                <select asp-for="LocationStateId" class="" asp-items="ViewBag.LocationsState"  hidden><option value="0">Select one</option></select>
+                                @if (@Model.LocationState != null)
+                                {
+                                    @Model.LocationState.Caption
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="City" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                @Model.City
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LostAmount" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                
+                                <input type="hidden" id="lossAmount" asp-for="LostAmount" class="form-control" />
+                                
+                                <label id="tem1" class="amount-font"></label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="Notes" class="col-md-3 control-label"></label>
+                            <div class="col-md-3 details-display">
+                                @if (@Model.Notes != null)
+                                {
+                                    var ss = @Model.Notes.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+
+                                    @foreach (var line in ss)
+                                    {
+                                    <p>@line </p> 
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">Photos and files </div>
+                    <div class="panel-body">
+
+                      
+                        <div class="row">
+                            <div>
+                                @{ int i = 0; int j = 0;}
+                                <div id="filelist">
+
+                                    @foreach (var doc in Model.Fraudsters[0].Documents)
+                                    {
+                                        <input type="hidden" asp-for="@doc.DocumentId" name="Documents[@(i)].DocumentId" id="docid_@(i)" value="@doc.DocumentId" />
+                                            <input type="hidden" asp-for="@doc.Contentype" name="Documents[@(i)].Contentype" id="con_@(i)" value="@doc.Contentype" />
+                                            <input type="hidden" asp-for="@doc.DocName" name="Documents[@(i)].DocName" id="docname_@(i)" value="@doc.DocName" />
+                                        i++;
+                                    }
+                                    <p>Images: </p>
+
+                                    <ul >
+                                        @foreach (var doc in Model.Fraudsters[0].Documents)
+                                        {
+                                            @if (@doc.Contentype.Contains("image"))
+                                            {
+                                                <li id="li_@(j)"> <a asp-controller="Documents" asp-action="DownloadFile" asp-route-id="@doc.DocumentId">@doc.DocName  </a>
+                                                    <a href="#" class="thumbnail" data-toggle="modal" data-target="#myModal">
+                                                        <img src="~/documents/GetImage/@doc.DocumentId" alt="Generic placeholder thumbnail" width="150" height="118">
+                                                    </a>
+                                                </li>
+                                                j++;
+                                            }
+                                        }
+                                    </ul>
+                                    <p>Files: </p>
+
+                                    <ul>
+                                        @foreach (var doc in Model.Fraudsters[0].Documents)
+                                        {
+                                            @if (!@doc.Contentype.Contains("image"))
+                                            {
+                                                j++;
+                                                <li id="li_@(j)"> <a asp-controller="Documents" asp-action="DownloadFile" asp-route-id="@doc.DocumentId">@doc.DocName  </a> </li>
+                                            }
+                                        }
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="panel panel-default ">
+                    <div class="panel-heading">Co-conspirators</div>
+                    <div class="panel-body">
+
+                       @{ int counter = 0;}
+                           @foreach (var doc in Model.Fraudsters)
+                           {
+                               @if (counter > 0)
+                               {
+                                <div>
+                                    <a name="@doc.FraudsterId" asp-action="edit" asp-controller="Fraudsters" asp-route-id="@doc.FraudsterId">@doc.LastName,@doc.FirstName </a>
+                                </div>
+                               }
+                               counter++;
+                           }
+                       
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="panel panel-default ">
+                <div class="panel-heading">IDs</div>
+                <div class="panel-body">
+                    @{int ind = 1;}
+@foreach (var ids in Model.Fraudsters[0].FraudsterIDs)
+{         
+               <div class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID  #@(ind)</h4>
+                           
+                            <div class="form-group">
+                                <select asp-for="@ids.IDTypeId" name="@ids.IDTypeId" class="" asp-items="ViewBag.IDTypes" hidden>
+                                    <option value="0">Select one</option>
+                                </select>
+                                    <label asp-for="@ids.IDTypeId" class="control-label"></label>
+                                   : @ids.IDType.IDTypeName
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="@ids.PassportNumber" class="control-label"></label>
+                               : @ids.PassportNumber
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <label asp-for="@ids.DateOfIssue" class="control-label"></label>
+                                  : @if (@ids.DateOfIssue != null)
+                                    {
+                                       @ids.DateOfIssue.Value.ToString("MM/dd/yyyy")
+                                    }
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <label asp-for="@ids.ExpirationDate" class="control-label"></label>
+                                    :
+                                @if (@ids.ExpirationDate != null)
+                                {
+                                    @ids.ExpirationDate.Value.ToString("MM/dd/yyyy")
+                                }
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="@ids.IssuingCountry" class="control-label"></label>
+                               : @ids.IssuingCountry
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@ids.IssuingAuthority" class="control-label"></label>
+                              : @ids.IssuingAuthority
+                            </div>
+                        </div>
+                    </div>
+    ind++;
+}
+
+                </div>
+            </div>
+        </div>
+
+
+    
+    </div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('img').on('click', function () {
+            var image = $(this).attr('src');
+            $('#myModal').on('show.bs.modal', function () {
+                $(".img-responsive").attr("src", image);
+            });
+        });
+    });
+
+    $(document).on('click', '.thumbnail', function () {
+        var image = $(this).find('img').attr('src');
+
+        $('#myModal').on('show.bs.modal', function () {
+            $(".img-responsive").attr("src", image);
+        });
+    });
+</script>
+
+

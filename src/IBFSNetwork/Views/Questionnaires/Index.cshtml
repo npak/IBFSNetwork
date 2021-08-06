@@ -1,0 +1,38 @@
+@model IEnumerable<IBFSNetwork.Models.Questionnaire>
+
+@{
+    ViewData["Title"] = "Survey";
+}
+<h2>Questions</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Deleted)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Question)
+            </th>
+            <th>
+                <a asp-action="Create" class="btn btn-addnew btn-xs">Create New</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Deleted)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Question)
+            </td>
+            <td>
+                <a asp-action="Edit" class="btn btn-primary btn-xs" asp-route-id="@item.QuestionnaireId">Edit</a> |
+                <a asp-action="Delete" class="btn btn-danger btn-xs" asp-route-id="@item.QuestionnaireId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

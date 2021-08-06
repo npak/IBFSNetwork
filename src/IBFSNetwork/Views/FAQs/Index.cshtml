@@ -1,0 +1,43 @@
+@model IEnumerable<IBFSNetwork.Models.FaqModels.FAQ>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<p>
+    <a asp-action="Create" class="btn btn-addnew btn-xs">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                FAQs
+            </th>
+            <th>
+                Answer
+            </th>
+            <th class="col-md-2 text-center">
+                Actions
+            </th>
+            <th></th>              
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question)
+          
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Replay)
+            </td>
+
+            <td class="col-md-2 text-center">
+                <a asp-action="Edit" class="btn btn-primary btn-xs"  asp-route-id="@item.FAQId">Edit</a>|<a asp-action="Delete" class="btn btn-danger btn-xs" asp-route-id="@item.FAQId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

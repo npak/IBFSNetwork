@@ -1,0 +1,90 @@
+@model IBFSNetwork.Models.AlertViewModels.UploadDocument
+
+@{
+    ViewData["Title"] = "Create";
+}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<h2>Create</h2>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+@*<script type="text/javascript">
+$(document).ready(function () {
+    $("#upload").click(function (evt) {
+        var fileUpload = $("#files").get(0);
+        var files = fileUpload.files;
+        var data = new FormData();
+        for (var i = 0; i < files.length ; i++) {
+            data.append(files[i].name, files[i]);
+        }
+    
+
+        $.ajax({
+            type: "POST",
+            url: "/Documents/UploadFilesAjax",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (message) {
+                alert(message);
+                $('#filelist').html(message);
+            },
+            error: function () {
+                alert("There was error uploading files!");
+            }
+        });
+    });
+
+
+});
+</script>*@
+
+<div>
+    <form method="post" asp-controller="Documents" asp-action="UploadFilesAjax" enctype="multipart/form-data"  data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" id="form0" >
+        <input type="file" id="files"
+               name="files" multiple />
+        <input type="button"
+               id="upload"
+               value="Upload Selected Files" />
+        
+    </form>
+    <div id="filelist"></div>
+
+</div>
+
+    <div class="form-horizontal">
+        <h4>Document</h4>
+        <hr />
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+
+        @*<div class="form-group">
+            <label asp-for="Content" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Contentype" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Contentype" class="form-control" />
+                <span asp-validation-for="Contentype" class="text-danger" />
+            </div>
+        </div>*@
+        <div class="form-group">
+            <label asp-for="DocName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DocName" class="form-control" />
+                <span asp-validation-for="DocName" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+

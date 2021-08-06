@@ -1,0 +1,26 @@
+@model IBFSNetwork.Models.AlertViewModels.IDType
+
+@{
+    ViewData["Title"] = "Delete ID Type";
+}
+
+<h3>Are you sure you want to delete thisID Type?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IDTypeName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IDTypeName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color faqlink">
+            <input type="submit" value="Delete" class="btn btn-default" /> 
+        </div>
+    </form>
+    <a asp-action="Index">Back to List</a>
+
+</div>

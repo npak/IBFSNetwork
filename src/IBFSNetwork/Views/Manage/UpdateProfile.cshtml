@@ -1,0 +1,35 @@
+﻿@model ProfileModel
+@{
+    ViewData["Title"] = "update profile";
+}
+
+<form asp-controller="Manage" asp-action="UpdateProfile" method="post" class="form-horizontal">
+    <h4>Update profile.</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Location" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsSetUpEmailAlert" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input type="checkbox" asp-for="IsSetUpEmailAlert" class="form-control" />
+            <span asp-validation-for="IsSetUpEmailAlert" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-default">Update profile</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - IBFSNetwork</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        @*<link rel="stylesheet" href="~/test/jquery-ui.css" />*@
+        
+        <link rel="stylesheet" href="~/css/CustomNavbar.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link href="~/lib/summernote/summernote.css" rel="stylesheet">
+        @*<link rel="stylesheet"
+              href="~/css/jquery.dataTables.min.css">*@
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+       
+        @*<link rel="stylesheet" href="~/test/jquery-ui.css" />*@
+        <link rel="stylesheet" href="~/css/CustomNavbar.css" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link href="~/lib/summernote/summernote.css" rel="stylesheet">
+    
+    @*<link rel="stylesheet"
+              href="~/css/jquery.dataTables.min.css">*@
+
+    </environment>
+    <script src="~/test/modernizr-2.6.2.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //setInterval('updateClock()', 1000);
+            worldClockZone();
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="Intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"><img  src="/images/Inter-Bank_Logo_Design_01_PNG_transparent_file.PNG" width="145" height="50" alt="Logo" /> </div>
+                <div class="col-md-1">London <br /><small><span id="London"> </span></small> </div>
+                <div class="col-md-1 col-md-offset-1">NYC <br /><small> <span id="NewYork" /></small> </div>
+                <div class="col-md-1  col-md-offset-1">Chicago <br /><small><span id="Chicago"></span></small></div>
+                <div class="col-md-1 col-md-offset-1">LA <br /> <small><span id="LosAngeles"/></small> </div>
+                <div class="col-md-3">@await Html.PartialAsync("_LoginPartial")</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="navbar navbar-default">
+        <div class="container">
+
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand">Fraud Alert Center</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-controller="Alerts" asp-action="Create">Add Alert</a></li>
+                    <li><a asp-controller="Alerts" asp-action="Index">See Alert</a></li>
+                    <li><a asp-controller="Search" asp-action="Index">Search Database</a></li>
+                    <li><a asp-controller="forumsview" asp-action="index">Knowlege Center</a></li>
+                    <li><a asp-controller="surveys" asp-action="Create">Survey</a></li>
+                    <li><a asp-controller="FAQs" asp-action="SearchFaq">FAQ</a></li>
+
+                    @if (User.IsInRole("admin"))
+                    {
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="ApplicationClients" asp-action="Index">Clients</a></li>
+                                <li><a asp-controller="BankSizes" asp-action="Index">Bank Sizes</a></li>
+                                <li><a asp-controller="BankTypes" asp-action="Index">Bank Types</a></li>
+                                <li><a asp-controller="Locations" asp-action="Index">Locations</a></li>
+                                <li><a asp-controller="LocationByCircuits" asp-action="Index">Circuits  Courts</a></li>
+
+                                <li><a asp-controller="FraudTypes" asp-action="Index">Fraud Type</a></li>
+                                <li><a asp-controller="IDTypes" asp-action="Index">IDTypes</a></li>
+
+                               
+                                @*<li><a asp-controller="Documents" asp-action="Index">Documents</a></li>*@
+                                <li role="separator" class="divider"></li>
+                                <li><a asp-controller="FAQs" asp-action="SearchFaq">FAQs</a></li>
+                                <li><a asp-controller="Feeds" asp-action="Index">Feeds</a></li>
+                                <li><a asp-controller="Fraudsters" asp-action="Index">Fraudsters</a></li>
+
+                                <li role="separator" class="divider"></li>
+                                <li><a asp-controller="RootForums" asp-action="Index">Main forums</a></li>
+                                <li><a asp-controller="Forums" asp-action="Index">Forums</a></li>
+                                <li><a asp-controller="SubThreads" asp-action="Index">SubForums</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a asp-controller="Questions" asp-action="Index">Discussions</a></li>
+                                 <li role="separator" class="divider"></li>
+                                <li><a asp-controller="Questionnaires" asp-action="Index">Manage Survey</a></li>
+                                <li><a asp-controller="QuestionnaireModels" asp-action="Index">Survey</a></li>
+
+                            </ul>
+                        </li>
+                    }
+
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Export Fraudsters <span class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-left">
+                            <li><a href="/exportdata/getcsv">CSV</a></li>
+                            <li><a href="/exportdata/getxml">XML</a></li>
+                            <li><a href="/exportdata/getjson">Json</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2016 - IBFSNetwork</p>
+        </footer>
+    </div>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="/js/clock1.js"></script>
+
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        <script src="/js/uploadFile.js"></script>
+        <script src="/lib/summernote/summernote.js"></script>
+        @*<script type="text/javascript"
+                src="/js/jquery.dataTables.min.js"></script>
+        <script src="/js/dataTables.bootstrap.min.js"></script>*@
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        <script src="/js/clock1.js"></script>
+        <script src="/js/uploadFile.js"></script>
+        <script src="/lib/summernote/summernote.js"></script>
+    
+    @*<script type="text/javascript"
+            src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTables.bootstrap.min.js"></script>*@
+    </environment>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,101 @@
+﻿@model RegisterViewModel
+@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Register";
+}
+<h2>@ViewData["Title"].</h2>
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        
+        //$("#UserNametxt").val($("#DefaultUser").val());
+        //$("#UserNumberCode").val($("#DefaultUserCode").val());
+
+        $("#ClientList").change(function () {
+            var clientcode = $("#ClientList").val();
+           // alert(clientcode)
+            $.ajax({
+                type: 'POST',
+                url: '/Account/GetUserName?clientcode=' + clientcode,
+                //processData: false,
+                contentType: "application/json; charset=utf-8",
+                dataType:'json',
+                //data: { clientid: selectedclientid },
+                success: function (data1) {
+                    if (data1.success) {                       
+                        $("#UserNametxt").val(data1.userName);
+                        $("#UserNumberCode").val(data1.userNumber);
+                        $("#ClientId").val(data1.clienId);
+                    }
+                    else {
+                        alert(data1.message);
+                    }
+                }
+            });
+
+
+        });
+    });
+</script>
+
+<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+    <h4>Create a new account.</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @*<input type="hidden" id="DefaultUser" value="@ViewBag.UserName" class="form-control" />
+    <input type="hidden" id="DefaultUserCode" value="@ViewBag.UserNumber" class="form-control" />*@
+
+    <div class="form-group">
+        <label asp-for="Client.ClientCode" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input id="ClientList" asp-for="Client.ClientCode" class="form-control"/>
+            <span asp-validation-for="Client.ClientCode" class="text-danger"></span>
+        </div>
+    </div>
+
+    <input type="hidden" id="ClientId" asp-for="ClientId" class="form-control" />
+    <input type="hidden" id="UserNumberCode" asp-for="UserNumberCode" class="form-control" />
+    <div class="form-group">
+        <label asp-for="UserName" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+       
+        <input id="UserNametxt" asp-for="UserName" readonly class="form-control" />
+       
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+    </div>
+   
+     <div class="form-group">
+        <label asp-for="Email" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-default">Register</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

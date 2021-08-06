@@ -1,0 +1,55 @@
+@model IBFSNetwork.Models.ForumViewModels.SubThreadView
+
+@{
+    ViewData["Title"] = "SubForum";
+}
+<script type="text/javascript">
+
+$(document).ready(function () {
+    $('body').on('click','.pageclick',function () {
+        var data = new FormData();
+        var subforumid= $("#subforumid").val();
+        var page = $(this).attr('title');
+        data.append("pagesize", "10");
+        data.append("page", page);
+        data.append("subforumid", subforumid);
+
+        $.ajax({
+            type: "POST",
+            url: "/ForumsView/ReloadSubForumPage",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (message) {
+                //alert(message);
+                $('#ppaging').html(message);
+            },
+            error: function () {
+                alert("There was error reloading data!");
+            }
+        });
+    });
+});
+
+</script>
+    <ui class="breadcrumb">
+        <li> <small><a asp-controller="forumsview" asp-action="Index">Forums</a> </small></li>
+        <li class="active"> <small><a asp-controller="forumsview" asp-action="Index" >@Model.ParentForum</a> </small></li>
+        <li class="active"> <small><a asp-controller="forumsview" asp-action="Forum" asp-route-id="@Model.ForumId">@Model.ForumTitle</a> </small></li>
+        <li class="active"> <small><a asp-controller="forumsview" asp-action="SubForum" asp-route-id="@Model.SubThreadId">@Model.Title</a> </small></li>
+    </ui>
+<input id="subforumid" type="hidden" asp-for="SubThreadId" class="form-control" />
+
+<h2>@Model.Title</h2>
+
+<div id="ppaging">
+    @Html.Partial("pSubForum", Model)
+
+</div>
+
+ 
+
+
+<div>
+    <a asp-controller="Questions" asp-action="SubCreate" asp-route-id="@Model.SubThreadId">New Discussion</a>
+</div>

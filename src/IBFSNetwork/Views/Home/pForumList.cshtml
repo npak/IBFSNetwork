@@ -1,0 +1,27 @@
+@model List<IBFSNetwork.Models.ForumViewModels.Question>
+
+@{
+    Layout = "";
+}
+@*<h4>Latest Discussions</h4>*@
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-sm-1  col-md-1">
+            <small>  @Html.DisplayFor(modelItem => item.ViewCount) views</small> 
+        </div>
+        <div class="col-sm-2 col-md-2">
+            <small> @Html.DisplayFor(modelItem => item.ReplyCount) replies</small>
+        </div>
+
+        <div class="col-sm-8 col-md-7">
+            <a asp-controller ="Replies" asp-action="Index" asp-route-id="@item.QuestionId">@item.Title</a>
+            <div>
+                <small>Started in @item.DatePosted.ToString("MM/dd/yyyy") by @Html.DisplayFor(modelItem => item.AppUser.UserName)</small>   
+            </div>
+</div>
+</div>
+    
+
+}

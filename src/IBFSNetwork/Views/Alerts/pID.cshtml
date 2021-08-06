@@ -1,0 +1,51 @@
+@model IBFSNetwork.Models.AlertViewModels.Alert
+
+@{
+    Layout = "";
+}
+@{ 
+    int ind = ViewBag.Number;
+}
+
+<div  class="col-md-3">
+    <div class="idspading">
+        <h4>ID # @(ind)  </h4>
+        
+        <div class="form-group">
+            <label asp-for="Fraudsters[0].FraudsterIDs[1010101010].IDTypeId" class="control-label"></label>
+            <select asp-for="Fraudsters[0].FraudsterIDs[1010101010].IDTypeId" id="Fraudsters[0].FraudsterIDs[@(ind)].IDTypeId" name="Fraudsters[0].FraudsterIDs[@(ind)].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes"><option value="0">Select one</option></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Fraudsters[0].FraudsterIDs[1010101010].PassportNumber" class="control-label"></label>
+            <input id="Fraudsters[0].FraudsterIDs[@(ind)].PassportNumber" name="Fraudsters[0].FraudsterIDs[@(ind)].PassportNumber" asp-for="Fraudsters[0].FraudsterIDs[1010101010].PassportNumber" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Fraudsters[0].FraudsterIDs[1010101010].DateOfIssue" class="control-label"></label>
+            <div class="input-group date" data-provide="datepicker">
+                <input type="text" id="Fraudsters[0].FraudsterIDs[@(ind)].DateOfIssue" name="Fraudsters[0].FraudsterIDs[@(ind)].DateOfIssue" asp-for="Fraudsters[0].FraudsterIDs[1010101010].DateOfIssue" class="mydatepicker" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="Fraudsters[0].FraudsterIDs[1010101010].ExpirationDate" class="control-label"></label>
+            <div class="input-group date" data-provide="datepicker">
+                <input type="text" id="Fraudsters[0].FraudsterIDs[@(ind)].ExpirationDate" name="Fraudsters[0].FraudsterIDs[@(ind)].ExpirationDate" asp-for="Fraudsters[0].FraudsterIDs[1010101010].ExpirationDate" class="mydatepicker" />
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Fraudsters[0].FraudsterIDs[1010101010].IssuingCountry" class="control-label"></label>
+            <input id="Fraudsters[0].FraudsterIDs[@(ind)].IssuingCountry" name="Fraudsters[0].FraudsterIDs[@(ind)].IssuingCountry" asp-for="Fraudsters[0].FraudsterIDs[1010101010].IssuingCountry" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Fraudsters[0].FraudsterIDs[1010101010].IssuingAuthority" class="control-label"></label>
+            <input id="Fraudsters[0].FraudsterIDs[@(ind)].IssuingAuthority" name="Fraudsters[0].FraudsterIDs[@(ind)].IssuingAuthority" asp-for="Fraudsters[0].FraudsterIDs[1010101010].IssuingAuthority" class="form-control" />
+        </div>
+
+    </div>
+</div>
+

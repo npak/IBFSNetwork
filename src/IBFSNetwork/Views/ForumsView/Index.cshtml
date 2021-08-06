@@ -1,0 +1,35 @@
+@model IEnumerable<IBFSNetwork.Models.ForumViewModels.RootViewModel>
+
+@{
+    ViewData["Title"] = "Knowledge Center";
+}
+
+<h2>Knowledge Center</h2>
+<div class="panel panel-default">
+    <div class="panel-body">
+          @foreach (var item in Model)
+            {
+                <div class="panel panel-forum">
+                    <div class="panel-heading">@Html.DisplayFor(modelItem => item.Title)</div>
+                    <div class="panel-body">
+                            @foreach (var fr in item.Forums)
+                            {
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <a asp-action="Forum" asp-route-id="@fr.ForumId"><strong>@Html.DisplayFor(modelItem => fr.Title)</strong></a>
+                                        <div><small> Discussion: @fr.DiscussionsCnt Messages:@fr.RepliesCnt  <span>SubForums: @fr.SubForumsCnt</span></small></div>
+                                    </div>
+                                    @if (@fr.QueId> 0)
+                                    {
+                                    <div class="col-md-3"> <small>@fr.LastDate</small> <a asp-controller="Replies" asp-action="Index" asp-route-id="@fr.QueId"><small>Last message</small> </a> by @fr.ByUser  </div>
+                                    }
+                                </div>
+                               
+                            }
+
+                    </div>
+                </div>
+            }
+    </div>
+
+    </div>

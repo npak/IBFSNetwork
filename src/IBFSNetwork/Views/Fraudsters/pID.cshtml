@@ -1,0 +1,79 @@
+﻿@model IBFSNetwork.Models.AlertViewModels.Fraudster
+
+@{
+    Layout = "";
+}
+
+@{ int i = ViewBag.IDnumber;}
+
+<div id="ID_@(i)" class="col-md-3">
+    <div class="idspading">
+        <h4>ID #@(i+1) </h4><a href="#" id="HrefID_@(i)" class="aIDs">
+    <img src="~/images/Delete_16.png" title="Delete" class="deleteupload">
+</a> 
+        <div class="form-group">
+            <label myasp-for="FraudsterIDs[@(i)].IDTypeId" class="control-label"></label>
+            <select myasp-for="FraudsterIDs[@(i)].IDTypeId" name="FraudsterIDs[@(i)].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes">
+                <option value="0">Select one</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label myasp-for="FraudsterIDs[@(i)].PassportNumber" class="control-label"></label>
+            <input name="FraudsterIDs[@(i)].PassportNumber" myasp-for="FraudsterIDs[@(i)].PassportNumber" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label myasp-for="FraudsterIDs[@(i)].DateOfIssue" class="control-label"></label>
+            <div class="input-group date" data-provide="datepicker">
+                <input type="text" name="FraudsterIDs[@(i)].DateOfIssue" myasp-for="FraudsterIDs[@(i)].DateOfIssue" class="mydatepicker" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label myasp-for="FraudsterIDs[@(i)].ExpirationDate" class="control-label"></label>
+            <div class="input-group date" data-provide="datepicker">
+                <input type="text" name="FraudsterIDs[@(i)].ExpirationDate" myasp-for="FraudsterIDs[@(i)].ExpirationDate" class="mydatepicker" />
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label myasp-for="FraudsterIDs[@(i)].IssuingCountry" class="control-label"></label>
+            <input name="FraudsterIDs[@(i)].IssuingCountry" myasp-for="FraudsterIDs[@(i)].IssuingCountry" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label myasp-for="FraudsterIDs[@(i)].IssuingAuthority" class="control-label"></label>
+            <input name="FraudsterIDs[@(i)].IssuingAuthority" myasp-for="FraudsterIDs[@(i)].IssuingAuthority" class="form-control" />
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("#myUploadID").on("click", ".aLink", function () {
+        var b = confirm('Are you sure you want to delete this item?');
+        if (b) {
+            var id = $(this).attr("id");
+            id = id.substring(id.indexOf("_") + 1);
+            $('#li_' + id).remove();
+            $('#con_' + id).remove();
+            $('#docid_' + id).remove();
+            $('#docname_' + id).remove();
+        }
+     });
+
+    $("#myUploadDoc").on("click", ".aLink", function () {
+        var b = confirm('Are you sure you want to delete this item?');
+        if (b) {
+            var id = $(this).attr("id");
+            id = id.substring(id.indexOf("_") + 1);
+            $('#li_' + id).remove();
+            $('#con_' + id).remove();
+            $('#docid_' + id).remove();
+            $('#docname_' + id).remove();
+        }
+    });
+</script>
+

@@ -1,0 +1,76 @@
+@model IBFSNetwork.Models.ForumViewModels.Reply
+
+@{
+    ViewData["Title"] = "Create";
+}
+<script>
+    $(document).on('click', '#btncreate', function () {
+        var data = new FormData();
+         var text = $("#summernote").summernote('code');
+        var userid = $("#userid").val();
+        var queid = $("#queid").val();
+        data.append("text", text);
+        data.append("userid", userid);
+        data.append("queid", queid);
+     
+        $.ajax({
+            type: "POST",
+            url: "/replies/CreateAjax",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (message) {
+                //alert(message);
+                window.location = message;
+            },
+            error: function () {
+                alert("There was error saving data!");
+            }
+        });
+    });
+</script>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Reply</h4>
+        <hr />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input id="userid" type="hidden" asp-for="AppUserId" class="form-control" />
+        <input id="queid" type="hidden" asp-for="QuestionId" class="form-control" />
+
+         <div class="form-group">
+            
+            <label asp-for="ReplyMsg" class="col-md-2 control-label"></label>
+             <div id="summernote"></div>
+
+            @*<div class="col-md-10">
+                <input asp-for="ReplyMsg" class="form-control" />
+                <span asp-validation-for="ReplyMsg" class="text-danger" />
+            </div>*@
+            
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btncreate" type="button" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true                  // set focus to editable area after initializing summernote
+        });
+    });
+</script>

@@ -1,0 +1,23 @@
+﻿@model IBFSNetwork.Models.AlertViewModels.AlertDisplayModel
+
+@{
+        Layout = "";
+}
+
+
+<h3> Industry News Feed</h3>
+<div>
+@foreach (var item in Model.feeds)
+{
+    <ul>
+        @foreach (var f in item.ListOfFeeds)
+                {
+            <li>
+                <a href=@Html.DisplayFor(modelItem => f.Link) target="_blank">@Html.DisplayFor(modelItem => f.Title)</a>
+
+            </li>
+
+        }
+    </ul>
+    }
+</div>

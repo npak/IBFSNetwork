@@ -1,0 +1,372 @@
+@model IBFSNetwork.Models.AlertViewModels.Alert
+
+@{
+    ViewData["Title"] = "Details";
+}
+<script>
+    $(document).ready(function SetLossAmount() {
+        //set init value
+        var y = $('#lossAmount').val();
+        $('#tem1').val(addCommas(y));
+    });
+
+    $(function () {
+        $('#tem1').on('input', function () {
+            var x = $(this).val();
+            x = x.replace(",", "").replace(",", "").replace(",", "");
+            $('#lossAmount').val(x);
+            $('#tem1').val(addCommas(x));
+        });
+    });
+
+
+    function addCommas(x) {
+        x = x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x;
+    }
+</script>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="img-responsive" src="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="form-horizontal">
+        <h4>Alert details</h4>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="hidden" asp-for="AlertId" class="form-control" />
+        <input type="hidden" asp-for="Fraudsters[0].FraudsterId" class="form-control" />
+
+        <div class="panel panel-default ">
+            <div class="panel-heading"> Subject Info</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <label asp-for="Fraudsters[0].LastName"></label>
+                        <input name="Fraudsters[0].LastName" asp-for="Fraudsters[0].LastName" class="form-control" readonly/>
+                        <span asp-validation-for="Fraudsters[0].LastName" class="text-danger" />
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].FirstName"></label>
+                        <input name="Fraudsters[0].FirstName" asp-for="Fraudsters[0].FirstName" class="form-control" readonly/>
+                        <span asp-validation-for="Fraudsters[0].FirstName" class="text-danger" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].MiddleName"></label>
+                        <input name="Fraudsters[0].MiddleName" asp-for="Fraudsters[0].MiddleName" class="form-control" readonly/>
+                        <span asp-validation-for="Fraudsters[0].MiddleName" class="text-danger" />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <label asp-for="Fraudsters[0].PhoneNumber"></label>
+                        <input type="text" name="Fraudsters[0].LastName" asp-for="Fraudsters[0].PhoneNumber" class="form-control" readonly/>
+                        <span asp-validation-for="Fraudsters[0].PhoneNumber" class="text-danger" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].Gender" control-label"></label>
+                        <select name="Fraudsters[0].Gender" asp-for="Fraudsters[0].Gender" class="form-control" disabled>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <span asp-validation-for="Fraudsters[0].Gender" class="text-danger" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Fraudsters[0].BOD" class="control-label"></label>
+
+                        <input type="text" asp-for="Fraudsters[0].BOD" class="mydatepicker" readonly/>
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <label asp-for="Fraudsters[0].Address"></label>
+                        <input name="Fraudsters[0].LastName" asp-for="Fraudsters[0].Address" class="form-control" readonly />
+                        <span asp-validation-for="Fraudsters[0].Address" class="text-danger" />
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="Fraudsters[0].Email"></label>
+                        <input name="Fraudsters[0].Email" asp-for="Fraudsters[0].Email" class="form-control" readonly />
+                        <span asp-validation-for="Fraudsters[0].Email" class="text-danger" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Fraudsters[0].Alias"></label>
+                        <input name="Fraudsters[0].Alias" asp-for="Fraudsters[0].Alias" class="form-control" readonly />
+                        <span asp-validation-for="Fraudsters[0].Alias" class="text-danger" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">Alert </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="AlertDate" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <div>
+                                    <div class="input-group date" data-provide="datepicker">
+                                        <input type="text" id="datepicker" asp-for="AlertDate" class="mydatepicker" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="BankSizeId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="BankSizeId" asp-items="ViewBag.BankSizes" class="form-control" disabled></select>
+                                <span asp-validation-for="BankSizeId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BankTypeId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="BankTypeId" class="form-control" asp-items="ViewBag.BankTypes" disabled></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FraudTypeId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="FraudTypeId" class="form-control" asp-items="ViewBag.FraudTypes"  disabled></select>
+                            </div>
+                        </div>
+                        <div id="myLocation" class="form-group">
+                            <label asp-for="LocationId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.Locations"  disabled></select>
+                            </div>
+                        </div>
+
+                        <div id="CountryHidden" class="form-group">
+                            <label asp-for="CountryId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="CountryId" class="form-control" asp-items="ViewBag.Countries"  disabled><option value="0">Select one</option></select>
+                            </div>
+                        </div>
+
+                        <div id="LocationByCircuit" class="form-group">
+                            <label asp-for="LocationByCircuitId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="LocationByCircuitId" class="form-control" asp-items="ViewBag.LocationsByCircuit"  disabled><option value="0">Select one</option></select>
+                            </div>
+                        </div>
+
+                        <div id="LocationState" class="form-group">
+                            <label asp-for="LocationStateId" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="LocationStateId" class="form-control" asp-items="ViewBag.LocationsState"  disabled><option value="0">Select one</option></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="City" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="City" class="form-control" readonly />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LostAmount" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                
+                                <input type="hidden" id="lossAmount" asp-for="LostAmount" class="form-control" />
+                                <input id="tem1" class="form-control" readonly/>
+                                <span asp-validation-for="LostAmount" class="text-danger" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="Notes" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <textarea rows="3" asp-for="Notes" class="form-control" readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">Photos and files </div>
+                    <div class="panel-body">
+
+                      
+                        <div class="row">
+                            <div>
+                                @{ int i = 0; int j = 0;}
+                                <div id="filelist">
+
+                                    @foreach (var doc in Model.Fraudsters[0].Documents)
+                                    {
+                                        <input type="hidden" asp-for="@doc.DocumentId" name="Documents[@(i)].DocumentId" id="docid_@(i)" value="@doc.DocumentId" />
+                                            <input type="hidden" asp-for="@doc.Contentype" name="Documents[@(i)].Contentype" id="con_@(i)" value="@doc.Contentype" />
+                                            <input type="hidden" asp-for="@doc.DocName" name="Documents[@(i)].DocName" id="docname_@(i)" value="@doc.DocName" />
+                                        i++;
+                                    }
+                                    <p>Images: </p>
+
+                                    <ul >
+                                        @foreach (var doc in Model.Fraudsters[0].Documents)
+                                        {
+                                            @if (@doc.Contentype.Contains("image"))
+                                            {
+                                                <li id="li_@(j)"> <a asp-controller="Documents" asp-action="DownloadFile" asp-route-id="@doc.DocumentId">@doc.DocName  </a>
+                                                    <a href="#" class="thumbnail" data-toggle="modal" data-target="#myModal">
+                                                        <img src="~/documents/GetImage/@doc.DocumentId" alt="Generic placeholder thumbnail" width="150" height="118">
+                                                    </a>
+                                                </li>
+                                                j++;
+                                            }
+                                        }
+                                    </ul>
+                                    <p>Files: </p>
+
+                                    <ul>
+                                        @foreach (var doc in Model.Fraudsters[0].Documents)
+                                        {
+                                            @if (!@doc.Contentype.Contains("image"))
+                                            {
+                                                j++;
+                                                <li id="li_@(j)"> <a asp-controller="Documents" asp-action="DownloadFile" asp-route-id="@doc.DocumentId">@doc.DocName  </a> </li>
+                                            }
+                                        }
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="panel panel-default ">
+                    <div class="panel-heading">Co-conspirators</div>
+                    <div class="panel-body">
+
+                       @{ int counter = 0;}
+                           @foreach (var doc in Model.Fraudsters)
+                           {
+                               @if (counter > 0)
+                               {
+                                <div>
+                                    <a name="@doc.FraudsterId" asp-action="edit" asp-controller="Fraudsters" asp-route-id="@doc.FraudsterId">@doc.LastName,@doc.FirstName </a>
+                                </div>
+                               }
+                               counter++;
+                           }
+                       
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="panel panel-default ">
+                <div class="panel-heading">IDs</div>
+                <div class="panel-body">
+                    @{int ind = 1;}
+@foreach (var ids in Model.Fraudsters[0].FraudsterIDs)
+{         
+               <div class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID  #@(ind)</h4>
+                           
+                            <div class="form-group">
+                                <label asp-for="@ids.IDTypeId" class="control-label"></label>
+                                <select asp-for="@ids.IDTypeId" name="@ids.IDTypeId" class="form-control" asp-items="ViewBag.IDTypes" disabled>
+                                    <option value="0">Select one</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="@ids.PassportNumber" class="control-label"></label>
+                                <input name="@ids.PassportNumber" asp-for="@ids.PassportNumber" class="form-control" readonly/>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="@ids.DateOfIssue" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="@ids.DateOfIssue" asp-for="@ids.DateOfIssue" class="mydatepicker" readonly/>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="@ids.ExpirationDate" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="@ids.ExpirationDate" asp-for="@ids.ExpirationDate" class="mydatepicker" readonly/>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="@ids.IssuingCountry" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[0].IssuingCountry" asp-for="@ids.IssuingCountry" class="form-control" readonly/>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="@ids.IssuingAuthority" class="control-label"></label>
+                                <input name="Fraudsters[0].FraudsterIDs[0].IssuingAuthority" asp-for="@ids.IssuingAuthority" class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+    ind++;
+}
+
+                </div>
+            </div>
+        </div>
+
+
+    
+    </div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('img').on('click', function () {
+            var image = $(this).attr('src');
+            $('#myModal').on('show.bs.modal', function () {
+                $(".img-responsive").attr("src", image);
+            });
+        });
+    });
+
+    $(document).on('click', '.thumbnail', function () {
+        var image = $(this).find('img').attr('src');
+
+        $('#myModal').on('show.bs.modal', function () {
+            $(".img-responsive").attr("src", image);
+        });
+    });
+</script>
+
+

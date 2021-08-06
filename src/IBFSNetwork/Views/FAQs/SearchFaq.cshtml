@@ -1,0 +1,73 @@
+@model IBFSNetwork.Models.FaqResultWithPage
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="~/css/accordion.css"  />
+<script type="text/javascript">
+
+$(document).ready(function () {
+    $('body').on('click', '.pageclick', function () {
+        var data = new FormData();
+        var page = $(this).attr('title');
+
+        data.append("searchstr", $("#searchstr").val());
+      
+        data.append("pagesize", "20");
+        data.append("page", page);
+
+        $.ajax({
+            type: "POST",
+            url: "/FAQs/LoadSearchFaq",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (message) {
+                $('#ppaging').html(message);
+            },
+            error: function () {
+                alert("There was error uploading files!");
+            }
+        });
+    });
+});
+
+</script>
+<div class="row faqlink">
+    <div class="col-md-7">
+        <h4>
+            FAQs
+        </h4>
+    </div>
+    <div class="col-md-4">
+
+        <form name="search" action="#" method="get" class="form-inline form-search">
+
+            <div class="input-group">
+                <label class="sr-only" for="searchstr">Search</label>
+                <input class="form-control" id="searchstr" type="text" name="searchstr" placeholder="Search">
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">GO</button>
+                </div>
+            </div>
+
+        </form>
+        </div>
+ </div>
+
+    <div id="ppaging">
+    @Html.Partial("_pFaq", Model)
+</div>
+
+        <script>
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].onclick = function () {
+                    this.classList.toggle("active");
+                    this.nextElementSibling.classList.toggle("show");
+                }
+            }
+        </script>
+

@@ -1,0 +1,40 @@
+@model IEnumerable<IBFSNetwork.Models.ApplicationClient>
+
+@{
+    ViewData["Title"] = "Clients";
+}
+
+@*<p>
+    <a  asp-action="Create">Create New</a>
+   
+</p>*@
+<h2>Clients</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserCount)
+            </th>
+            <th><span class="addnew-right"><a asp-action="Create" class="btn btn-addnew btn-xs">Create New</a></span>   </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserCount)
+            </td>
+            <td class="col-md-2">
+                <a asp-action="Edit" class="btn btn-primary btn-xs" asp-route-id="@item.ClientId">Edit</a> |
+                <a asp-action="Delete"class="btn btn-danger btn-xs"  asp-route-id="@item.ClientId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

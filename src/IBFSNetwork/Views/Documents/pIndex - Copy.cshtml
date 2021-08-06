@@ -1,0 +1,121 @@
+﻿@model IEnumerable<IBFSNetwork.Models.AlertViewModels.UploadDocumentTemplate>
+
+@{
+    Layout = "";
+}
+
+
+@{ int i = 0;}
+@foreach (var t in Model)
+{
+    @if (@t.ContentType.Contains("image"))
+    {
+    <input type="hidden" class="Doc_Documents[@(i)].Contentype" name="Documents[@(i)].Contentype" id="con_@(i)" value="@t.ContentType" />
+    <input type="hidden" class="Doc_Documents[@(i)].DocName" name="Documents[@(i)].DocName" id="docname_@(i)" value="@t.DocumentPaths" />
+    <input type="hidden" class="Doc_Documents[@(i)].DocumentId" name="Documents[@(i)].DocumentId" id="docid_@(i)" value="@t.DocumentId" />
+
+            i++;
+     }
+}
+
+@foreach (var t in Model)
+{
+    @if (!@t.ContentType.Contains("image"))
+    {
+        <input type="hidden" class="Doc_Documents[@(i)].Contentype" name="Documents[@(i)].Contentype" id="con_@(i)" value="@t.ContentType" />
+        <input type="hidden" class="Doc_Documents[@(i)].DocName" name="Documents[@(i)].DocName" id="docname_@(i)" value="@t.DocumentPaths" />
+        <input type="hidden" class="Doc_Documents[@(i)].DocumentId" name="Documents[@(i)].DocumentId" id="docid_@(i)" value="@t.DocumentId" />
+
+        i++;
+    }
+}
+
+
+<label class="label label-warning">Images: </label>
+<ul id="myUploadID"  >
+    @foreach (var t in Model)
+    {
+        @if (@t.ContentType.Contains("image"))
+        {
+            @if (Convert.ToInt32( @t.DocumentId) > 0)
+            {
+                <li id="@t.LiID">
+                <a asp-controller="Documents" asp-action="DownloadFile" asp-route-id="@t.DocumentId"> @t.DocumentPaths </a>
+                <a href="#" id="@t.HrefID" class="@t.HrefClass"> <img src="~/images/Delete_16.png" title="Delete" class="deleteupload"></a>
+            
+                <a href="#" class="thumbnail" data-toggle="modal" data-target="#myModal">
+                    <img id="aaa1" class="thumbnailclick" src="~/documents/GetImage/@t.DocumentId" alt="Generic placeholder thumbnail" width="150" height="118">
+                </a>
+                </li>
+            }
+            else
+            {
+                <li id="@t.LiID">
+                    <a asp-controller="Documents" asp-action="DownloadfromServer" asp-route-fileName="@t.DocumentPaths.Trim()"> @t.DocumentPaths </a>
+                    <a href="#" id="@t.HrefID" class="@t.HrefClass" > <img src="~/images/Delete_16.png" title="Delete" class="deleteupload"></a>
+
+                    <a href="#" class="thumbnail" data-toggle="modal" data-target="#myModal">
+                        <img id="bbb1" class="thumbnailclick" src="~/uploads/@t.UserForder/@t.DocumentPaths.Trim()" alt="Generic placeholder thumbnail" width="150" height="118">
+                    </a>
+                </li>
+
+            }
+
+        }
+
+    }
+</ul>
+<p class="label label-warning">Files: </p>
+<ul id="myUploadDoc">
+    @foreach (var t in Model)
+    {
+        @if (!@t.ContentType.Contains("image"))
+        {
+            @if (Convert.ToInt32(@t.DocumentId) > 0)
+            {
+                <li id="@t.LiID"> 
+                    <a asp-controller="Documents" asp-action="DownloadFile" asp-route-id="@t.DocumentId">@t.DocumentPaths   </a>
+                <a href="#" id="@t.HrefID" class="@t.HrefClass"> 
+                    <img src="~/images/Delete_16.png" title="Delete" class="deleteupload"></a> 
+                </li>
+
+            }
+            else
+            {
+                <li id="@t.LiID">
+                    <a asp-controller="Documents" asp-action="DownloadfromServer" asp-route-fileName="@t.DocumentPaths.Trim()">@t.DocumentPaths   </a>
+                    <a href="#" id="@t.HrefID" class="@t.HrefClass" >
+                        <img src="~/images/Delete_16.png" title="Delete" class="deleteupload">
+                    </a>
+                </li>
+            }
+        }
+
+    }
+</ul>
+
+<script>
+    $("#myUploadID").on("click", ".aLink", function () {
+        var b = confirm('Are you sure you want to delete this item?');
+        if (b) {
+            var id = $(this).attr("id");
+            id = id.substring(id.indexOf("_") + 1);
+            $('#li_' + id).remove();
+            $('#con_' + id).remove();
+            $('#docid_' + id).remove();
+            $('#docname_' + id).remove();
+        }
+     });
+
+    $("#myUploadDoc").on("click", ".aLink", function () {
+        var b = confirm('Are you sure you want to delete this item?');
+        if (b) {
+            var id = $(this).attr("id");
+            id = id.substring(id.indexOf("_") + 1);
+            $('#li_' + id).remove();
+            $('#con_' + id).remove();
+            $('#docid_' + id).remove();
+            $('#docname_' + id).remove();
+        }
+    });
+</script>

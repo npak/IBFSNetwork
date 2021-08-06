@@ -1,0 +1,88 @@
+@model IBFSNetwork.Models.AlertViewModels.AlertDisplayModel
+
+@{
+    Layout = "";
+}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div>
+    <div id="curve_chart" style="height: 750px;"></div>
+   
+    <script type="text/javascript">
+            google.charts.load('current', { 'packages': ['corechart'] });
+
+        //draw Total Loss
+        google.charts.setOnLoadCallback(function () {
+                var title = '@Model.IndustyLoss.Title';
+
+                var dataTable = new google.visualization.DataTable(
+                    @Html.Raw(Json.Serialize(Model.IndustyLoss.DataTable))
+                );
+
+
+             drawLineChart('curve_chart', title, dataTable);
+            });
+
+        // draw Fraud Trend
+        @*google.charts.setOnLoadCallback(function () {
+            var title = '@Model.IndustyTrend.Title';
+
+            var dataTable = new google.visualization.DataTable(
+                @Html.Raw(Json.Serialize(Model.IndustyTrend.DataTable))
+            );
+
+            drawColumnChart( dataTable);
+        });*@
+
+
+  //      google.charts.setOnLoadCallback(drawColumnChart);
+
+        function drawLineChart(elementId, title, dataTable) {
+            var d = new Date();
+            var monthname = "";
+            if (d.getMonth() > 5)
+                monthname = d.getFullYear().toString();
+            else
+                monthname = (d.getFullYear() - 1).toString() + "-" + d.getFullYear().toString();
+            var options = {
+                chartArea: {
+                    left: 55,
+                    right: 5
+                },
+                title: 'Total Industry Loss',
+                hAxis: { title: monthname },
+                vAxis: { title: 'millions' },
+                legend: 'none'
+            };
+            var chart = new google.visualization.LineChart(document.getElementById(elementId));
+            chart.draw(dataTable, options);
+        }
+
+        //function drawColumnChart(dataTable) {
+        //    var d = new Date();
+        //    var options = {
+        //       // width: 400,
+        //        chartArea: {
+        //            left: 55,
+        //            right: 5
+        //        },
+        //            title: 'Fraud Trend',
+        //            legend: 'none'
+        //        //    ,
+        //        //    hAxis: { title: monthname },
+        //        //
+        //        };
+
+        //    var chart = new google.visualization.ColumnChart(document.getElementById('column_chart'));
+
+        //    //google.visualization.events.addListener(chart, 'ready', function () {
+        //    //    column_chart.innerHTML = '<a href="/Home/ShowTotals"><img src="' + chart.getImageURI() + '"></a>';
+        //    //           console.log(column_chart.innerHTML);
+        //    //});
+        //        chart.draw(dataTable, options);
+        //    }
+
+
+    </script>
+</div>
+

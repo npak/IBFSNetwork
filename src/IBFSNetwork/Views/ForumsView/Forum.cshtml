@@ -1,0 +1,73 @@
+@model IBFSNetwork.Models.ForumViewModels.ForumViewModel
+
+@{
+    ViewData["Title"] = "Forum";
+}
+<script type="text/javascript">
+
+$(document).ready(function () {
+    $('body').on('click','.pageclick',function () {
+        var data = new FormData();
+        var forumid= $("#forumid").val();
+        var page = $(this).attr('title');
+        data.append("pagesize", "10");
+        data.append("page", page);
+        data.append("forumid", forumid);
+       
+        $.ajax({
+            type: "POST",
+            url: "/ForumsView/ReloadForumPage",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (message) {
+                //alert(message);
+                $('#ppaging').html(message);
+            },
+            error: function () {
+                alert("There was error reloading data!");
+            }
+        });
+    });
+});
+
+</script>
+
+    <ui class="breadcrumb">
+        <li> <small><a asp-controller="forumsview" asp-action="Index">Forums</a> </small></li>
+        <li class="active"> <small><a asp-controller="forumsview" asp-action="Index" >@Model.ParentForum</a> </small></li>
+        <li class="active"> <small><a asp-controller="forumsview" asp-action="Forum">@Model.Title</a> </small></li>
+    </ui>
+
+<h2>@Model.Title</h2>
+<input id="forumid" type="hidden" asp-for="ForumId" class="form-control" />
+
+@if (Model.SubThread.Count>0)
+{ 
+   <div class="panel panel-default">
+    <div class="panel-body">
+        @foreach (var sf in Model.SubThread)
+        {
+            <input type="hidden" asp-for="@sf.SubThreadId" class="form-control" />
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <a asp-action="SubForum" asp-route-id="@sf.SubThreadId">@Html.DisplayFor(modelItem => sf.Title)</a>
+                                        <div><small> Discussion: @sf.DiscussionsCnt Messages:@sf.RepliesCnt  </small></div>
+
+                                    </div>
+
+                                </div>
+
+        }
+
+    </div>
+</div>
+}
+<div id="ppaging">
+    @Html.Partial("pForum", Model)
+
+</div>
+<div>
+    <a asp-controller="Questions" asp-action="Create" asp-route-id="@Model.ForumId">New Discussion</a>
+</div>

@@ -1,0 +1,47 @@
+@model IEnumerable<IBFSNetwork.Models.AlertViewModels.Document>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contentype)
+            </th>
+           
+             <th>
+                @Html.DisplayNameFor(model => model.DocName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Contentype)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.DocName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DocumentId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DocumentId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DocumentId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

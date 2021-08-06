@@ -1,0 +1,44 @@
+@model IBFSNetwork.Models.QuestionnaireModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit Survey</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+        @{ int i = 0;}
+        @foreach (var que in ViewBag.Questionnaire)
+        {
+                <input type="hidden" asp-for="@Model.QuestionnaireAnswers[i].AnswerId" />
+                <div class="form-group">
+                    <label class="col-md-10">@que.Question</label>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @*<input asp-for="@Model.QuestionnaireAnswers[i].AnswerText" class="form-control" />*@
+                        <textarea rows="3" asp-for="@Model.QuestionnaireAnswers[i].AnswerText" class="form-control"></textarea>
+                        <span asp-validation-for="@Model.QuestionnaireAnswers[i].AnswerText" class="text-danger" />
+                    </div>
+                </div>
+            i++;
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

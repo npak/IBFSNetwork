@@ -1,0 +1,52 @@
+@model IBFSNetwork.Models.FeedModels.Feed
+
+@{
+    ViewData["Title"] = "Edit default feed";
+}
+
+<h2>Feed Details</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Desc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Desc)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDefault)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsDefault)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Url)
+        </dd>
+    </dl>
+</div>
+<form asp-action="EditDefault">
+    <div class="form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="FeedId" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Remove from list" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

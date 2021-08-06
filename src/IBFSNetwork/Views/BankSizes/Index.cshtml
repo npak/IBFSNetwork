@@ -1,0 +1,44 @@
+@model IEnumerable<IBFSNetwork.Models.AlertViewModels.BankSize>
+
+@{
+    ViewData["Title"] = "Bank Size";
+}
+
+@*<div class="row">
+    <div class="header-left"> <h4> Bank Size</h4></div>
+    <div class="addnew-right">
+        <a asp-action="Create" class="btn btn-addnew btn-sm">Create New</a>
+    </div>
+</div>*@
+<h2> Bank Size</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Caption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SortOrder)
+            </th>
+            <th>
+                <span class="addnew-right"><a asp-action="Create" class="btn btn-addnew btn-xs">Create New</a></span>   
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Caption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SortOrder)
+            </td>
+            <td class="col-md-2">
+                <a asp-action="Edit" class="btn btn-primary btn-xs" asp-route-id="@item.BankSizeId">Edit</a> |
+                <a asp-action="Delete" class="btn btn-danger btn-xs" asp-route-id="@item.BankSizeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,358 @@
+@model IBFSNetwork.Models.AlertViewModels.Fraudster
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="/js/IDs.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#CountryHidden").hide();
+        $("#addelement3").hide();
+        $("#addelement4").hide();
+
+
+        $("#myLocation").change(function () {
+            var str = "";
+            $("#myLocation").each(function () {
+                str += $(this).find(":selected").text();
+
+                if (str == "Other") {
+                    $('#CountryHidden').show();
+                    $('#LocationByCircuit').hide();
+                    $('#LocationState').hide();
+                }
+                else {
+                    $("#CountryHidden").prop('selectedIndex', 0);
+                    $('#CountryHidden').hide();
+
+                   $('#LocationByCircuit').show();
+                    $('#LocationState').show();
+                }
+            });
+        });
+
+
+    })
+</script>
+
+<script>
+
+
+    $(function My1() {
+        var item3 = document.getElementById("FraudsterIDs[2].PasportId");
+       // al/ert(items.value);
+        var i = 1;
+       // alert(item3.value);
+        if (item3.value > 0)
+        {
+            $("#addelement3").show();
+            i++;
+        }
+        var item4 = document.getElementById("FraudsterIDs[3].PasportId");
+        //alert(item4.value);
+
+        if (item4.value > 0) {
+            $("#addelement4").show();
+            i++;
+        }
+
+        $('#addLink').click(function () {
+            i++;
+            if (i == 2)
+                $("#addelement3").show();
+            else if (i == 3)
+                $("#addelement4").show();
+            else
+                alert("Error while adding additional IDs.");
+
+        });
+    });
+
+</script>
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Edit Fraudster</h4>
+        <hr />
+        <div asp-validation-summary="All" class="text-danger"></div>
+       <input type="hidden" asp-for="FraudsterId"  />
+
+        <div class="panel panel-default ">
+            <div class="panel-heading">Fraudster info </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label asp-for="BOD" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input type="text" name="BOD" asp-for="BOD" class="mydatepicker" />
+                        <span asp-validation-for="BOD" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Company" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Company" class="form-control" />
+                        <span asp-validation-for="Company" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LastName" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="FirstName" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MiddleName" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="MiddleName" class="form-control" />
+                        <span asp-validation-for="MiddleName" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label asp-for="Gender" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <select name="Gender" asp-for="Gender" class="form-control">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Address" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default ">
+            <div class="panel-heading">IDs</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID #1</h4>
+                            <input type="hidden" id="FraudsterIDs[0].PasportId" asp-for="FraudsterIDs[0].PasportId" class="form-control" />
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[0].IDTypeId" class="control-label"></label>
+                                <select asp-for="FraudsterIDs[0].IDTypeId" name="FraudsterIDs[0].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes">
+                                    <option value="0">Select one</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[0].PassportNumber" class="control-label"></label>
+                                <input name="FraudsterIDs[0].PassportNumber" asp-for="FraudsterIDs[0].PassportNumber" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[0].DateOfIssue" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="FraudsterIDs[0].DateOfIssue" asp-for="FraudsterIDs[0].DateOfIssue" class="mydatepicker" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[0].ExpirationDate" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="FraudsterIDs[0].ExpirationDate" asp-for="FraudsterIDs[0].ExpirationDate" class="mydatepicker" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[0].IssuingCountry" class="control-label"></label>
+                                <input name="FraudsterIDs[0].IssuingCountry" asp-for="FraudsterIDs[0].IssuingCountry" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[0].IssuingAuthority" class="control-label"></label>
+                                <input name="FraudsterIDs[0].IssuingAuthority" asp-for="FraudsterIDs[0].IssuingAuthority" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="addelement1" class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID #2</h4>
+                            <input type="hidden" id="FraudsterIDs[1].PasportId" asp-for="FraudsterIDs[1].PasportId" class="form-control" />
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[1].IDTypeId" class="control-label"></label>
+                                <select asp-for="FraudsterIDs[1].IDTypeId" name="FraudsterIDs[1].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes"><option value="0">Select one</option></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[1].PassportNumber" class="control-label"></label>
+                                <input name="FraudsterIDs[1].PassportNumber" asp-for="FraudsterIDs[1].PassportNumber" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[1].DateOfIssue" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="FraudsterIDs[1].DateOfIssue" asp-for="FraudsterIDs[1].DateOfIssue" class="mydatepicker" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[1].ExpirationDate" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="FraudsterIDs[1].ExpirationDate" asp-for="FraudsterIDs[1].ExpirationDate" class="mydatepicker" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[1].IssuingCountry" class="control-label"></label>
+                                <input name="FraudsterIDs[1].IssuingCountry" asp-for="FraudsterIDs[1].IssuingCountry" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[1].IssuingAuthority" class="control-label"></label>
+                                <input name="FraudsterIDs[1].IssuingAuthority" asp-for="FraudsterIDs[1].IssuingAuthority" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="addelement3" class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID #3</h4>
+                            <input type="hidden" id="FraudsterIDs[2].PasportId" asp-for="FraudsterIDs[2].PasportId" class="form-control" />
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[2].IDTypeId" class="control-label"></label>
+                                <select asp-for="FraudsterIDs[2].IDTypeId" name="FraudsterIDs[2].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes"><option value="0">Select one</option></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[2].PassportNumber" class="control-label"></label>
+                                <input  name="FraudsterIDs[2].PassportNumber" asp-for="FraudsterIDs[2].PassportNumber" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[2].DateOfIssue" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="FraudsterIDs[2].DateOfIssue" asp-for="FraudsterIDs[2].DateOfIssue" class="mydatepicker" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[2].ExpirationDate" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="FraudsterIDs[2].ExpirationDate" asp-for="FraudsterIDs[2].ExpirationDate" class="mydatepicker" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[2].IssuingCountry" class="control-label"></label>
+                                <input name="FraudsterIDs[2].IssuingCountry" asp-for="FraudsterIDs[2].IssuingCountry" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[2].IssuingAuthority" class="control-label"></label>
+                                <input name="FraudsterIDs[2].IssuingAuthority" asp-for="FraudsterIDs[2].IssuingAuthority" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="addelement4" class="col-md-3">
+                        <div class="idspading">
+                            <h4>ID #4</h4>
+
+                            <input type="hidden" id="FraudsterIDs[3].PasportId" asp-for="FraudsterIDs[3].PasportId" class="form-control" />
+                         <div class="form-group">
+                                <label asp-for="FraudsterIDs[3].IDTypeId" class="control-label"></label>
+                                <select asp-for="FraudsterIDs[3].IDTypeId" name="FraudsterIDs[3].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes"><option value="0">Select one</option></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[3].PassportNumber" class="control-label"></label>
+                                <input name="FraudsterIDs[3].PassportNumber" asp-for="FraudsterIDs[3].PassportNumber" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[3].DateOfIssue" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="FraudsterIDs[3].DateOfIssue" asp-for="FraudsterIDs[3].DateOfIssue" class="mydatepicker" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[3].ExpirationDate" class="control-label"></label>
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="FraudsterIDs[3].ExpirationDate" asp-for="FraudsterIDs[3].ExpirationDate" class="mydatepicker" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[3].IssuingCountry" class="control-label"></label>
+                                <input name="FraudsterIDs[3].IssuingCountry" asp-for="FraudsterIDs[3].IssuingCountry" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FraudsterIDs[3].IssuingAuthority" class="control-label"></label>
+                                <input name="FraudsterIDs[3].IssuingAuthority" asp-for="FraudsterIDs[3].IssuingAuthority" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <a id="addLink" href="javascript:void(0)"> Add ID</a>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+<div>
+    <a asp-action="FraudstersByAlert" asp-route-id="@ViewBag.AlertId">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

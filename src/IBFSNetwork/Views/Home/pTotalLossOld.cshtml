@@ -1,0 +1,78 @@
+@model IBFSNetwork.Models.AlertViewModels.AlertDisplayModel
+
+@{
+    Layout = "";
+}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data1 = google.visualization.arrayToDataTable([
+          ['Year', 'Sales'],
+          ['2004',  1000],
+          ['2005',  1170],
+          ['2006',  660],
+          ['2007',  1030]
+        ]);
+
+
+        var data = new google.visualization.DataTable(
+            @Html.Raw(Json.Serialize(Model.IndustyLoss.DataTable)));
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data1, options);
+      }
+</script>
+<div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+@*<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div>
+    <h4>My chart</h4>
+    <div id="curv_chart" style="width: 750px; height: 450px;"></div>
+    <script type="text/javascript">
+            google.charts.load('current', { 'packages': ['corechart'] });
+
+            google.charts.setOnLoadCallback(function () {
+                var title = '@Model.IndustyLoss.Title';
+
+                var dataTable = new google.visualization.DataTable(
+                   @Html.Raw(Json.Serialize(Model.IndustyLoss.DataTable)));
+
+               drawColumnChart('curv_chart', title, dataTable);
+                // drawLineChart('curv_chart', title, dataTable);
+
+            });
+
+           
+
+            function drawLineChart(elementId, title, dataTable) {
+                var options = {
+                    title: 'Total Industry Loss',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                };
+                var chart = new google.visualization.LineChart(document.getElementById(elementId));
+                chart.draw(dataTable, options);
+            }
+
+            function drawColumnChart(elementId, title, dataTable) {
+                var options = {
+                    title: title,
+                    legend:'none'
+                };
+                var chart = new google.visualization.ColumnChart(document.getElementById(elementId));
+                chart.draw(dataTable, options);
+            }
+    </script>
+</div>*@
+

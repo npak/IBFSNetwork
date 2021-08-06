@@ -1,0 +1,61 @@
+﻿@model IBFSNetwork.Models.FaqResultWithPage
+@{
+    Layout = "";
+}
+<div class="row faqlink">
+    <div class="col-md-10">
+
+        @foreach (var item in Model.Faqs)
+            {
+            <button class="accordion">@item.Question</button>
+                <div class="panel">
+                    <p>@item.Replay</p>
+                </div>
+
+        }
+    </div>
+    <div class="col-md-2">
+
+        <a asp-action="Create" class="btn btn-addnew btn-xs faqlink"> New question</a>
+
+        <a asp-action="Index" class="btn btn-addnew btn-xs">View your questions</a>
+
+
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        @if (Model.PageInfo.EndPage > 1)
+        {
+            <ul class="pagination">
+                @if (Model.PageInfo.CurrentPage > 1 && Model.PageInfo.TotalPages > Model.PageInfo.PageSize)
+                {
+                    <li class="page-item">
+                        <a class="pageclick" href="#" title="1"><span aria-hidden="true">&laquo;</span> </a>
+                    </li>
+                    <li>
+                        <a class="pageclick" href="#" title="@(Model.PageInfo.CurrentPage - 1)"><span aria-hidden="true">&lsaquo;</span></a>
+                    </li>
+                }
+
+                @for (var page = Model.PageInfo.StartPage; page <= Model.PageInfo.EndPage; page++)
+                {
+                    <li class="@(page == Model.PageInfo.CurrentPage ? "active" : "page-item")">
+                        <a class="pageclick" href="#" title="@page">@page</a>
+                    </li>}
+
+                @if (Model.PageInfo.CurrentPage < Model.PageInfo.TotalPages && Model.PageInfo.TotalPages > Model.PageInfo.PageSize)
+                {
+                    <li>
+                        <a class="pageclick" href="#" title="@(Model.PageInfo.CurrentPage + 1)"><span aria-hidden="true">&rsaquo;</span></a>
+                    </li>
+                    <li>
+                        <a class="pageclick" href="#" title="@(Model.PageInfo.TotalPages)"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>

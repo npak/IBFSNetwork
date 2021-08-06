@@ -1,0 +1,111 @@
+@model IBFSNetwork.Models.ForumViewModels.ForumViewModel
+
+@{
+    Layout = "";
+}
+
+    
+<div class="panel panel-default">
+    <div class="panel-body">    
+        <table id="myTable" class="table table-striped">
+            <thead>
+                <tr class="myforum">
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Replies
+                    </th>
+                    <th>
+                        Views
+                    </th>
+                    <th>
+                        Last Message
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Question)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Replies" asp-action="Index" asp-route-id="@item.QuestionId">@Html.DisplayFor(modelItem => item.Title)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReplyCount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ViewCount)
+                        </td>
+                        <td class="col-md-2">
+                             @if (@item.QueId > 0)
+                             {
+                                <div>
+                                    <small>@item.LastDate</small> <a asp-controller="Replies" asp-action="Index" asp-route-id="@item.QueId"><small>Last message</small> </a> by @item.ByUser
+                                </div>
+                             }     
+                        </td>
+@if (User.IsInRole("admin") || Model.UserId==@item.UserId)
+{
+                        <td class="col-md-2 text-center">
+                            <a asp-action="Edit" class="btn btn-primary btn-xs" asp-route-id="@item.QueId">Edit</a>|<a asp-action="Delete" class="btn btn-danger btn-xs" asp-route-id="@item.QueId">Delete</a>
+                        </td>
+}
+                    </tr>
+                }
+            </tbody>
+        </table>
+    
+     </div>
+    </div>
+<div class="row">
+    @*<div class="col-md-1 col-md-offset-1" >
+            <select id="pagesize" name="pagesize" class="form-control">
+               <option  value="10">10</option>
+                <option  value="20">20</option>
+                <option  value="25">25</option>
+                <option value="50">50</option>
+
+            </select>
+            <select id="pagesize" name="pagesize" asp-items="Model.PageSizeListl" class="form-control"></select>
+
+        </div>*@
+    <div class="col-md-6 col-md-offset-4">
+        @if (Model.PageInfo.EndPage > 1)
+        {
+            <ul class="pagination pagination-xs">
+                @if (Model.PageInfo.CurrentPage > 1 && Model.PageInfo.TotalPages > Model.PageInfo.PageSize)
+                {
+                    <li class="page-item">
+                        <a class="pageclick" href="#" title="1"><span aria-hidden="true">&laquo;</span> </a>
+                    </li>
+                            <li>
+                                <a class="pageclick" href="#" title="@(Model.PageInfo.CurrentPage - 1)"><span aria-hidden="true">&lsaquo;</span></a>
+                            </li>
+                }
+
+                @for (var page = Model.PageInfo.StartPage; page <= Model.PageInfo.EndPage; page++)
+                {
+                    <li class="@(page == Model.PageInfo.CurrentPage ? "active" : "page-item")">
+                        <a class="pageclick" href="#" title="@page">@page</a>
+                    </li>}
+
+                @if (Model.PageInfo.CurrentPage < Model.PageInfo.TotalPages && Model.PageInfo.TotalPages > Model.PageInfo.PageSize)
+                {
+                    <li>
+                        <a class="pageclick" href="#" title="@(Model.PageInfo.CurrentPage + 1)"><span aria-hidden="true">&rsaquo;</span></a>
+                    </li>
+                            <li>
+                                <a class="pageclick" href="#" title="@(Model.PageInfo.TotalPages)"><span aria-hidden="true">&raquo;</span></a>
+                            </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+
+

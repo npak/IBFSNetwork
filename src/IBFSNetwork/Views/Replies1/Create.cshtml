@@ -1,0 +1,33 @@
+@model IBFSNetwork.Models.ForumViewModels.Reply
+
+@{
+    ViewData["Title"] = "Reply ";
+}
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Reply</h4>
+        <hr />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="hidden" asp-for="AppUserId" class="form-control" />
+        <input type="hidden" asp-for="QuestionId" class="form-control" />
+        
+        <div class="form-group">
+            <label asp-for="ReplyMsg" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <textarea rows="8" asp-for="ReplyMsg" class="form-control"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@*<div>
+    <a asp-action="Index" asp-route-id="QuestionId">Back to List</a>
+</div>*@
+

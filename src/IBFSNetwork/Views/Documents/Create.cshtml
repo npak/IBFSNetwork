@@ -1,0 +1,153 @@
+﻿<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="/js/uploadFile.js"></script>
+
+@*<script type="text/javascript">
+$(document).ready(function () {
+    $("#upload").click(function (evt) {
+
+        var fileUpload = $("#files").get(0);
+        var files = fileUpload.files;
+        var data = new FormData();
+        for (var i = 0; i < files.length ; i++) {
+            data.append(files[i].name, files[i]);
+        }
+        var ui = document.getElementById("myUploadID");
+        var items = ui.getElementsByTagName("li");
+
+        if (typeof (items) != "undefined" || items != null) {
+            data.append("filecnt", items.length);
+
+            for (var i = 0; i < items.length; ++i) {
+                data.append("file" + i.toString(), items[i].innerText);
+            }
+
+
+            for (var i = 0; i < items.length; ++i) {
+
+                var iid = "#con_" + i.toString()
+                var tt = $(iid).val();
+               // alert(tt);
+                //alert("con" + i.toString());
+                data.append("con" + i.toString(), tt);
+                //alert("con" + i.toString());
+            }
+            //alert("a5");
+
+        }
+
+        var alertid = document.getElementById("AlertId");
+        data.append("AlertId", alertid.value);
+       // alert(alertid.value);
+        $.ajax({
+            type: "POST",
+            url: "/Documents/UploadFilesAjax",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (message) {
+                //alert(message);
+                $('#filelist').html(message);
+            },
+            error: function () {
+                alert("There was error uploading files!");
+            }
+        });
+    });
+
+ 
+
+});
+
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+    $("#Save").click(function (evt) {
+
+        var data = new FormData();
+
+        var ui = document.getElementById("myUploadID");
+        var items = ui.getElementsByTagName("li");
+
+        if (typeof (items) != "undefined" || items != null) {
+            data.append("filecnt", items.length);
+
+            for (var i = 0; i < items.length; ++i) {
+                data.append("file" + i.toString(), items[i].innerText);
+            }
+
+        }
+
+
+        for (var i = 0; i < items.length; ++i) {
+
+            var iid = "#con_" + i.toString()
+            var tt = $(iid).val();
+
+            data.append("con" + i.toString(), tt);
+            //alert("con" + i.toString());
+        }
+
+        var alertid = document.getElementById("AlertId");
+        data.append("AlertId", alertid.value);
+
+        $.ajax({
+            type: "POST",
+            url: "/Documents/Save",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function () {
+                //alert(message);
+                $('#filelist').html("<span>File(s) succesfully saved.</span>");
+                $("#files").replaceWith($("#files").val('').clone(true));
+            },
+            error: function () {
+                alert("There was error uploading files!");
+            }
+        });
+    });
+});
+
+</script>*@
+
+<form method="post" enctype="multipart/form-data">
+    <input id="AlertId" type="hidden" value="@ViewBag.AlertId" class="form-control" />
+    <div class="row">
+        <div class="col-md-5">
+            <input type="file" id="files"
+                   name="files" multiple />
+        </div>
+        <div class="col-md-3">
+            <input type="button"
+                   id="upload"
+                   value="Upload Selected Files" />
+        </div>
+
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div id="filelist" class="uploadfile">
+                <ul id="myUploadID"></ul>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-1">
+            <input type="button" id="Save" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+
+    @*<div class="row">
+        <div class="form-group">
+            <a asp-controller="Documents" asp-action="DownloadFile"  asp-route-id="21">Back to List</a>
+        </div>
+    </div>*@
+    <div >
+        <a asp-controller="alerts" asp-action="Index">Back to Alerts</a>
+    </div>
+    
+</form>

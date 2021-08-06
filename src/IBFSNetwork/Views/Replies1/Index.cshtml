@@ -1,0 +1,40 @@
+@model  IEnumerable<IBFSNetwork.Models.ForumViewModels.>
+@{
+    ViewData["Title"] = "Replies";
+}
+
+   
+<h3>@ViewBag.itle</h3>
+<div>@ViewBag.CommentsCount Comments </div>
+<hr />
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-8">
+            @*<a asp-action="Details" asp-route-id="@item.QuestionId">@item.ReplayMsg</a>*@
+            @item.ReplyMsg
+            
+        </div>
+        
+        <div class="col-md-2">
+            <div>
+               @Html.DisplayFor(modelItem => item.AppUser.UserName) posted in @item.ReplyDate.ToString("MM/dd/yyyy") 
+            </div>
+    
+        </div>
+    </div>
+    <hr />
+
+}
+<div class="row">
+    <div class="col-md-2">
+        <a asp-controller="Questions" asp-action="ViewForumList">Back to Discussion List</a> 
+    </div>
+    <div class="col-md-2 col-md-offset-8">
+        <a asp-action="Create" asp-route-id=@ViewBag.QuestionId>Reply</a>
+    </div>
+    </div>

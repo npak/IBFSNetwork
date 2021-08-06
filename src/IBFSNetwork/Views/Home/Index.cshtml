@@ -1,0 +1,80 @@
+﻿@model IBFSNetwork.Models.AlertViewModels.AlertDisplayModel
+
+@{
+    ViewData["Title"] = "Landing page";
+}
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="row">
+            @*<div class="col-md-9"></div>*@
+            <h4>Alerts</h4>
+            @Html.Partial("AlertsList")
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 nopadding">
+                <div class="panel panel-default ">
+                    <div class="panel-heading"> Total Industry Loss</div>
+                    <div class="panel-body">
+                        <div id="curve_chart" style="width: 400px; height: 270px;"></div>
+                        </div>
+                </div>
+                    
+                
+            </div>
+            
+            <div class="col-md-6 nopadding">
+                <div class="panel panel-default ">
+                    <div class="panel-heading"> Fraud Trend</div>
+                    <div class="panel-body">
+                        @Html.Partial("pFraudTrend")
+                    </div>
+                </div>
+    
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="panel panel-default ">
+                <div class="panel-heading"> Knowledge Center</div>
+                <div class="panel-body">
+                    @Html.Partial("pForumList", Model.Questions)
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-default ">
+            <div class="panel-heading"> Quick Links</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <a asp-controller="Alerts" asp-action="Create" title="New Alert">Add Alert</a>
+                    </div>
+                    <div class="col-md-5">
+                        <a asp-action="Index" asp-controller="Feeds" title="Manage Feeds">
+                            Add Feeds
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="panel panel-default ">
+            <div class="panel-heading"> RSS Feeds</div>
+            <div class="panel-body">
+                 @Html.Partial("~/Views/RSSFeed/RssFeeds.cshtml")
+                </div>
+        </div>
+        
+    </div>
+
+</div>
+

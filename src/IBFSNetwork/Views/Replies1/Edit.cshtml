@@ -1,0 +1,54 @@
+@model IBFSNetwork.Models.ForumViewModels.Reply
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Reply</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="ReplyId" />
+        <div class="form-group">
+            <label asp-for="AppUserId" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserId"></select>
+                <span asp-validation-for="AppUserId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="QuestionId" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="QuestionId" class="form-control" asp-items="ViewBag.QuestionId"></select>
+                <span asp-validation-for="QuestionId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ReplyDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ReplyDate" class="form-control" />
+                <span asp-validation-for="ReplyDate" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ReplyMsg" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ReplyMsg" class="form-control" />
+                <span asp-validation-for="ReplyMsg" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

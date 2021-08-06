@@ -1,0 +1,40 @@
+@model IBFSNetwork.Models.AlertViewModels.Alert
+
+<div class="col-md-3">
+    <h4>ID # @ViewBag.number+1 </h4>
+    <div class="form-group">
+        <label asp-for="Fraudsters[0].FraudsterIDs[2].IDTypeId" class="control-label"></label>
+        <select asp-for="Fraudsters[0].FraudsterIDs[2].IDTypeId" name="Fraudsters[0].FraudsterIDs[2].IDTypeId" class="form-control" asp-items="ViewBag.IDTypes"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Fraudsters[0].FraudsterIDs[2].PassportNumber" class="control-label"></label>
+        <input name="Fraudsters[0].FraudsterIDs[2].PassportNumber" asp-for="Fraudsters[0].FraudsterIDs[2].PassportNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Fraudsters[0].FraudsterIDs[2].DateOfIssue" class="control-label"></label>
+        <div class="input-group date" data-provide="datepicker">
+            <input type="text" name="Fraudsters[0].FraudsterIDs[2].DateOfIssue" asp-for="Fraudsters[0].FraudsterIDs[2].DateOfIssue" class="mydatepicker" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Fraudsters[0].FraudsterIDs[2].ExpirationDate" class="control-label"></label>
+        <div class="input-group date" data-provide="datepicker">
+            <input type="text" name="Fraudsters[0].FraudsterIDs[2].ExpirationDate" asp-for="Fraudsters[0].FraudsterIDs[2].ExpirationDate" class="mydatepicker" />
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Fraudsters[0].FraudsterIDs[2].IssuingCountry" class="control-label"></label>
+        <input name="Fraudsters[0].FraudsterIDs[2].IssuingCountry" asp-for="Fraudsters[0].FraudsterIDs[2].IssuingCountry" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Fraudsters[0].FraudsterIDs[2].IssuingAuthority" class="control-label"></label>
+        <input name="Fraudsters[0].FraudsterIDs[2].IssuingAuthority" asp-for="Fraudsters[0].FraudsterIDs[2].IssuingAuthority" class="form-control" />
+    </div>
+
+</div>

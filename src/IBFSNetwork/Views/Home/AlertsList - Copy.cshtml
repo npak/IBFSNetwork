@@ -1,0 +1,75 @@
+@model IBFSNetwork.Models.AlertViewModels.AlertDisplayModel
+
+<table class="table table-bordered table-hover" style="width:100%;">
+    <thead>
+        <tr class="alertlistth">
+            <th>
+                Last Name
+            </th>
+            <th>
+                First Name 
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                State
+            </th>
+            <th>
+                City
+            </th>
+
+            <th>
+                Bank Size
+            </th>
+            <th>
+                Bank type
+            </th>
+
+            <th>
+                Loss Amount
+            </th>
+            <th>
+                Fraud type
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.alerts) {
+        <tr>
+            <td>
+                
+                @Html.DisplayFor(modelItem => item.LastName)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LostAmount)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FraudType)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>

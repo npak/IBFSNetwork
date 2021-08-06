@@ -1,0 +1,146 @@
+@model IBFSNetwork.Models.SearchResulttWithPage
+@{
+    
+    ViewData["Title"] = "Search";
+}
+
+
+<h2>Search alerts</h2>
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+    $("#Clear").click(function () {
+        $("#lastName").val("");
+        $("#firstName").val("");
+        $("#idNumber").val("");
+        $("#company").val("");
+
+
+        $("#city").val("");
+       $("#locationId").val("0");
+       $("#stateId").val("0");
+
+       $("#address").val("0");
+
+       $("#phone").val("");
+       $("#email").val("");
+       $("#alias").val("");
+    });
+});
+
+$(document).ready(function () {
+    $('body').on('click', '.pageclick', function () {
+        var data = new FormData();
+        var page = $(this).attr('title');
+
+        data.append("lastName", $("#lastName").val());
+        data.append("firstName", $("#firstName").val());
+        data.append("idNumber", $("#idNumber").val());
+        data.append("company", $("#company").val());
+        data.append("city", $("#city").val());
+        data.append("locationId", $("#locationId").val());
+        data.append("stateId", $("#stateId").val());
+        data.append("address", $("#address").val());
+        data.append("phone", $("#phone").val());
+        data.append("email", $("#email").val());
+        data.append("alias", $("#alias").val());
+        data.append("pagesize", "20");
+        data.append("page", page);
+
+        $.ajax({
+            type: "POST",
+            url: "/search/loadSearch",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (message) {
+                $('#ppaging').html(message);
+            },
+            error: function () {
+                alert("There was error uploading files!");
+            }
+        });
+    });
+});
+
+</script>
+
+<form asp-action="Index" asp-controller="Search" method="get">
+
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+    <div class="row extra-bottom-padding10">
+    <div class="col-md-1">
+        <strong> Filter by:</strong>
+    </div>
+    <div class="col-md-2">
+
+        <input name="lastName" id="lastName" value="@ViewBag.LastName" class="form-control input-sm" placeholder="Last name" />
+    </div>
+      <div class="col-md-2">
+        <input name="firstName" id="firstName" value="@ViewBag.FirstName" class="form-control input-sm" placeholder="First name" />
+    </div>
+    <div class="col-md-2">
+
+        <input name="idNumber" id="idNumber" value="@ViewBag.IDNumber" class="form-control input-sm" placeholder="ID Number" />
+    </div>
+        <div class="col-md-2">
+
+            <input name="company" id="company" value="@ViewBag.Company" class="form-control input-sm" placeholder="Company" />
+        </div>
+</div>
+            
+    <div class="row extra-bottom-padding10">  
+        <div class="col-md-1">
+
+        </div>         
+                <div id="myLocation" class="col-md-2">
+                    <select id="locationId" name="locationId" class="form-control input-sm" asp-items="ViewBag.Locations"><option value="0">Select location</option></select>
+                </div>
+                <div id="LocationState" class="col-md-2">
+                    <select id="stateId" name="stateId" class="form-control  input-sm" asp-items="ViewBag.States"><option value="0">Select state</option></select>
+                </div>
+                <div class="col-md-2">
+
+                    <input name="city" id="city" value="@ViewBag.City" class="form-control input-sm" placeholder="City" />
+                </div>
+        <div class="col-md-2">
+
+            <input name="alias" id="alias" value="@ViewBag.Alias" class="form-control input-sm" placeholder="Alias" />
+        </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-1">
+                    @*col-lg-12 col-md-12 col-sm-4 col-xs-12*@
+                </div>
+                <div id="myAddress" class="col-md-2">
+                    <select id="address" name="address" class="form-control  input-sm" asp-items="ViewBag.Address"><option value="0">Select Address</option></select>
+                </div>                
+                <div class="col-md-2">
+                    <input name="phone" id="phone" value="@ViewBag.Phone" class="form-control  input-sm" placeholder="Phone" />
+                </div>
+                <div class="col-md-2">
+
+                    <input name="email" id="email" value="@ViewBag.Emil" class="form-control input-sm" placeholder="Email" />
+                </div>
+                <div class="col-md-1">
+                    <input type="submit" value="Search" class="btn btn-primary">
+
+                </div>
+                <div class="col-md-1">
+                    <input type="button" id="Clear" value="Clear" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<div id="ppaging">
+    @Html.Partial("_pSearch", Model)
+</div>
+
